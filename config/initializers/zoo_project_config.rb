@@ -1,32 +1,23 @@
 # Project slug in Ouroboros
-Milkman::Application.config.project_slug = 		"milky_way"
+Milkman::Application.config.project_name = 		"Martian Milkman"
+
+Milkman::Application.config.project_slug = 		"planet_four"
 
 # Types of annotations
-Milkman::Application.config.object_types = [	"bubble",
-												"cluster",
-												"ego",
-												"galaxy",
-												"bowshock",
-												"pillars",
-												"artifact"
+Milkman::Application.config.object_types = [	"blotch",
+												"fan"
 											]
 
-Milkman::Application.config.hex = {				"bubble" => "#57D6E4",
-												"cluster" => "#D1C056",
-												"ego" => "#4FD84E",
-												"galaxy" => "#D86593",
-												"small-bubble" => "#B894E3",
-												"bowshock" => "#F6FF00",
-												"pillars" => "#D4B5FF",
-												"artifact" => "#FF0700"
+Milkman::Application.config.hex = {				"blotch" => "#57D6E4",
+												"fan" => "#D1C056"
 									}
 
-Milkman::Application.config.types = {			"Bubble"=>"bubble",
-												"Cluster"=>"cluster",
-												"EGO"=>"ego",
-												"Galaxy"=>"galaxy",
-												"Small Bubble"=>"small-bubble",
-												"Bow Shock" => "bowshock",
-												"Pillars" => "pillars",
-												"artifact" => "artifact"
+Milkman::Application.config.types = {			"Blotch"=>"blotch",
+												"Fan"=>"fan"
 									}
+
+Milkman::Application.config.image = {			"width"=>840.0,
+												"height"=>648.0
+									}
+
+

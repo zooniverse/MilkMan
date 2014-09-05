@@ -37,6 +37,18 @@ class Subject
     end
   end
 
+  def real_spread(input)
+    adjacent = 100.0
+    hypotenuse = adjacent / Math.cos(input.to_f/(180.0/3.14159265359))
+    opposite = hypotenuse * Math.sin(input.to_f/(180.0/3.14159265359))
+    inradius = (adjacent * opposite) / (adjacent + opposite + hypotenuse)
+    renderedOpposite = inradius * 2
+    renderedAdjacent = adjacent - renderedOpposite
+    renderedAngle = Math.atan(renderedOpposite / renderedAdjacent)
+    renderedSpread = renderedAngle * 2
+    return renderedSpread*(180.0/3.14159265359)
+  end
+
   def classifications
     Classification.where(:subject_ids => [Subject.find_by_zooniverse_id(self.zooniverse_id).id])
   end
@@ -47,9 +59,7 @@ class Subject
 
   def annotations
     unless self.is_tutorial? #Exclude tutorial
-      primary = self.classifications.map{|c|c.annotations}.flatten.select{|i|i["center"]}
-      secondary = self.classifications.map{|c|c.annotations}.flatten.select{|i|i["content"]}
-      return primary+secondary
+      self.classifications.map{|c|c.annotations}.flatten.select{|i|i["center"]||i["source"]}
     else
       return {}
     end
@@ -73,25 +83,34 @@ class Subject
     s.skip(rand(s.size-1)).first
   end
 
+<<<<<<< 802566f9489216e05b3fa5ed7d4645a427bbccf2
   def annotations_by_type(o="ego")
     self.annotations.select{|a| a if a["name"]==o || a["content"]==o}
+=======
+  def annotations_by_type(o="blotch")
+    self.annotations.select{|a| a if a["type"]==o}
+>>>>>>> Planet Four Branch
   end
 
   def dbscan_by_type(o,min_points,epsilon)
     output = { "raw"=>[], "reduced"=>[], "signal"=>{}, "noise"=>[] }
-    objects = self.annotations.select{|a| a if a["name"]==o || a["content"]==o}
+    objects = self.annotations.select{|a| a if a["type"]==o}
     objects.each do |i|
-      if i.has_key? "center"
+      
+      if o=="fan"
         rot = i["angle"].to_f%180
-        rx = rot>90 ? i["ry"].to_f : i["rx"].to_f
-        ry = rot>90 ? i["rx"].to_f : i["ry"].to_f
-        output["raw"] << [i["center"][0].to_f, i["center"][1].to_f, rx, ry, (5.0/90.0)*(rot%90.0) ]
-      else
-        rot = 0
-        rx = i["width"].to_f
-        ry = i["height"].to_f
-        output["raw"] << [i["left"].to_f, i["top"].to_f, rx, ry, 0 ]
+        rx = i["distance"].to_f
+        ry = i.has_key?("version") ? i["spread"] : real_spread(i["spread"])
+        output["raw"] << [i["source"]["x"].to_f, i["source"]["y"].to_f, rx, ry, (5.0/90.0)*(rot%90.0) ]   
       end
+
+      if o=="blotch"    
+        rot = i["angle"].to_f%180
+        rx = rot>90 ? i["radius2"].to_f : i["radius1"].to_f
+        ry = rot>90 ? i["radius1"].to_f : i["radius2"].to_f
+        output["raw"] << [i["center"]["x"].to_f, i["center"]["y"].to_f, rx, ry, (5.0/90.0)*(rot%90.0) ]
+      end
+
     end
 
     dbscan = Clusterer.new( output["raw"], {:min_points => min_points, :epsilon => epsilon})
@@ -210,34 +229,36 @@ class Subject
   end
 
   def width
-  	if self.state == "legacy"
-      s = self.location["standard"]
-      if s.index('bubble_centred')
-        s[s.index('mosaic_')+7..s.index('_I24M1.jpg')-1].split('x')[0].to_f
-      else
-        s[s.index('h/')+2..s.index('_jpgs')-1].split('x')[0].to_f
-      end
-    else
-      self.metadata["size"].split(/x/)[0].to_f
-    end
+    return 1.2962962963
+   # if self.state == "legacy"
+   #    s = self.location["standard"]
+   #    if s.index('bubble_centred')
+   #      s[s.index('mosaic_')+7..s.index('_I24M1.jpg')-1].split('x')[0].to_f
+   #    else
+   #      s[s.index('h/')+2..s.index('_jpgs')-1].split('x')[0].to_f
+   #    end
+   #  else
+   #    self.metadata["size"].split(/x/)[0].to_f
+   #  end
   end
 
   def height
-  	if self.state == "legacy"
-      s = self.location["standard"]
-      if s.index('bubble_centred')
-        s[s.index('mosaic_')+7..s.index('_I24M1.jpg')-1].split('x')[1].to_f
-      else
-        s[s.index('h/')+2..s.index('_jpgs')-1].split('x')[1].to_f
-      end
-    else
-      self.metadata["size"].split(/x/)[1].to_f
-    end
+    return 1
+  	# if self.state == "legacy"
+   #    s = self.location["standard"]
+   #    if s.index('bubble_centred')
+   #      s[s.index('mosaic_')+7..s.index('_I24M1.jpg')-1].split('x')[1].to_f
+   #    else
+   #      s[s.index('h/')+2..s.index('_jpgs')-1].split('x')[1].to_f
+   #    end
+   #  else
+   #    self.metadata["size"].split(/x/)[1].to_f
+   #  end
   end
 
   def pixel_scale
-  	xs = self.width.to_f/800.0
-  	ys = self.height.to_f/400.0
+  	xs = self.width.to_f/Milkman::Application.config.image["width"]
+  	ys = self.height.to_f/Milkman::Application.config.image["height"]
 
   	return xs.round(5)==ys.round(5) ? xs : "scale conflict"
   end

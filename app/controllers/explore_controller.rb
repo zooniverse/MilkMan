@@ -1,7 +1,7 @@
 
 class ExploreController < ApplicationController
   def index
-  	@pagetitle = "Milkman: Data Explorer"
+  	@pagetitle = Milkman::Application.config.project_name+": Data Explorer"
   	render :layout => "explore"
   end
 end

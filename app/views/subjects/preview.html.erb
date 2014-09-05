@@ -1,6 +1,6 @@
-<% scale = 0.36 %>
-<% width = 800.0*scale %>
-<% height = 400.0*scale %>
+<% scale = 288/Milkman::Application.config.image["width"] %>
+<% width = Milkman::Application.config.image["width"]*scale %>
+<% height = Milkman::Application.config.image["height"]*scale %>
 <% @hex =  Milkman::Application.config.hex %>
 <% @types = Milkman::Application.config.types %>
 
@@ -11,25 +11,17 @@
   <% @results.each do |type,res| %>
     <% res["signal"].each do |k,arr| %>
       <% arr.each do |d| %>
-        <%- if ["bubble", "cluster", "ego", "galaxy"].include? type -%>
-          <ellipse cx="<%= d["x"]*scale %>" cy="<%= d["y"]*scale %>" rx="<%= d["rx"]*scale %>" ry="<%= d["ry"]*scale %>" <%= type %>="<%= @s.zooniverse_id %>-<%= k %>" fill="#000000" stroke="white" fill-opacity="0" stroke-width="1" tabindex="0" opacity="0"  transform="rotate(<%= d["angle"] %>, <%= d["x"]*scale %>, <%= d["y"]*scale %>)"></ellipse>
-        <%- else -%>
-          <rect x="<%= (d["x"].to_f)*scale %>" y="<%= (d["y"].to_f)*scale %>" width="<%= (d["rx"].to_f)*scale %>" height="<%= (d["ry"].to_f)*scale %>" <%= type %>="<%= @s.zooniverse_id %>-<%= k %>" fill="#000000" stroke="white" fill-opacity="0" stroke-width="1" tabindex="0" opacity="0"  />
-        <%- end -%>
-      <%- end -%>
+          <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", k, false] -%>
+          <%= render partial: "#{type}", obj: @obj %>
+      <% end %>
     <% end %>
   <% end %>
 
   <% @results.each do |type,res| %>
     <% count = 0 %>
     <% res["reduced"].each do |d| %>
-      <%- if ["bubble", "cluster", "ego", "galaxy"].include? type -%>
-        <ellipse cx="<%= d["x"]*scale %>" cy="<%= d["y"]*scale %>" rx="<%= d["rx"]*scale %>" ry="<%= d["ry"]*scale %>" fill="#000000" stroke="white" fill-opacity="0" stroke-width="4" tabindex="0" opacity="0.5" transform="rotate(<%= d["angle"] %>, <%= d["x"]*scale %>, <%= d["y"]*scale %>)" onmouseover="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity', '0.5');" onmouseout="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity', '0');" ></ellipse>
-        <ellipse cx="<%= d["x"]*scale %>" cy="<%= d["y"]*scale %>" rx="<%= d["rx"]*scale %>" ry="<%= d["ry"]*scale %>" fill="#000000" stroke="<%= @hex[type] %>" fill-opacity="0" stroke-width="1" tabindex="0" opacity="1.0" transform="rotate(<%= d["angle"] %>, <%= d["x"]*scale %>, <%= d["y"]*scale %>)" onmouseover="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity', '0.5');" onmouseout="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity', '0');" ></ellipse>
-      <%- else -%>
-        <rect x="<%= (d["x"].to_f)*scale %>" y="<%= (d["y"].to_f)*scale %>" width="<%= (d["rx"].to_f)*scale %>" height="<%= (d["ry"].to_f)*scale %>" fill="#000000" stroke="white" fill-opacity="0" stroke-width="4" tabindex="0" opacity="0.5" onmouseover="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity', '0.5');" onmouseout="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity', '0');" />
-        <rect x="<%= (d["x"].to_f)*scale %>" y="<%= (d["y"].to_f)*scale %>" width="<%= (d["rx"].to_f)*scale %>" height="<%= (d["ry"].to_f)*scale %>" fill="#000000" stroke="<%= @hex[type] %>" fill-opacity="0" stroke-width="1" tabindex="0" opacity="1.0" onmouseover="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity', '0.5');" onmouseout="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity', '0');" />
-      <%- end -%>
+        <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", count, true] -%>
+        <%= render partial: "#{type}", obj: @obj %>
       <% count+=1 %>
     <% end %>
   <% end %>

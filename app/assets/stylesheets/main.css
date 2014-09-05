@@ -40,11 +40,11 @@ h1, h2, h3 {
 }
 
 #randomButton {
-  background: #43be8b;
+  background: #E6241C;
 }
 
 #randomButton:hover {
-  background: #48E29E;
+  background: #FD8272;
 }
 
 div.preview-holder {
@@ -66,13 +66,13 @@ div.preview-holder {
   line-height: 30px;
   text-align: center;
   font-size: 18px;
-  background-color: #3c8999;
+  background-color: #E6241C;
   color: #ffffff;
   -webkit-transition:background .2s;-moz-transition:background .2s;-o-transition:background .2s;-ms-transition:background .2s;transition:background .2s;
 }
 
 .preview-link:hover{
-  background-color: #4BBAC5;
+  background-color: #FD8272;
 }
 
 #catalogue-info {
@@ -133,7 +133,7 @@ td, th{
 }
 
 tr.table-header, tr.header {
-  background-color: #3c8999;
+  background-color: #C27A13;
   color: #fff;
   font-weight: normal;
   text-align: left;
@@ -141,10 +141,12 @@ tr.table-header, tr.header {
 
 tr.odd {
   background-color: #ffffff;
+  color: #666666;
 }
 
 tr.even {
   background-color: #cccccc;
+  color: #666666;
 }
 
 #footer {

@@ -1,6 +1,6 @@
-<% scale = 1.2 %>
-<% width = 800.0*scale %>
-<% height = 400.0*scale %>
+<% scale = 960/Milkman::Application.config.image["width"] %>
+<% width = Milkman::Application.config.image["width"]*scale %>
+<% height = Milkman::Application.config.image["height"]*scale %>
 <% @hex =  Milkman::Application.config.hex %>
 <% @types = Milkman::Application.config.types %>
 

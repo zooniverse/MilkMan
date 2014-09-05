@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Milkman</title>
+  <title>Martian Milkman</title>
   <%= stylesheet_link_tag "main" %>
   <%= stylesheet_link_tag "mwp-styles" %>
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700">
@@ -67,7 +67,7 @@
 <%= yield %>
 
 <div id="footer">
-  <h3>Milkman delivers data for the Zooniverse's <a href="http://www.milkywayproject.org">Milky Way Project</a></h3>
+  <h3>Martian Milkman delivers data for Zooniverse's <a href="http://www.planetfour.org">Planet Four</a></h3>
   <small>
   Includes <%= number_with_delimiter(Classification.size) %> classifications up to <%= Classification.most_recent.created_at.to_formatted_s(:long_ordinal) %>
   <br/>
