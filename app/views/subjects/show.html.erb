@@ -1,26 +1,48 @@
-<% scale = 960.0/Milkman::Application.config.image["width"] %>
-<% width = Milkman::Application.config.image["width"]*scale %>
-<% height = Milkman::Application.config.image["height"]*scale %>
-<% @hex =  Milkman::Application.config.hex %>
-<% @types = Milkman::Application.config.types %>
+<% scale = 960.0/Milkman::Application.config.project["image"]["width"] %>
+<% width = Milkman::Application.config.project["image"]["width"]*scale %>
+<% height = Milkman::Application.config.project["image"]["height"]*scale %>
+<% @hex =  Milkman::Application.config.project["hex"] %>
+<% @types = Milkman::Application.config.project["types"] %>
+
+<%- if @s.image_count>0 -%>
+<button id="frameChanger">Frame <span id="frameDisplay">0</span></button>
+<script type="text/javascript">
+
+    $(document).ready(function($) {
+      $('.imageFrame[frame!=0]').hide();
+      $('ellipse[frame!=0]').hide();
+    });
+
+    $('#frameChanger').click(function() {
+      currentFrame = parseInt($('#frameDisplay').text());
+      newFrame = (currentFrame+1) % <%= @s.image_count %>;
+      $('#frameDisplay').text(newFrame);
+      $('.imageFrame[frame!='+newFrame+']').hide();
+      $('.imageFrame[frame='+newFrame+']').show();
+      $('ellipse[frame!='+newFrame+']').hide();
+      $('ellipse[frame='+newFrame+']').show();
+    });
+
+</script>
+<%- end -%>
 
 <div id="catalogue-info">
     <ul>
-        <li><span class="key">Coords</span>: <%= @s.glon %>, <%= @s.glat %></li>
-        <li><span class="key">Size</span>: <%= @s.metadata["size"] %></li>
-        <li><span class="key">Volunteers</span>: <%= @s.classification_count %></li>
-        <li><span class="key">Talk</span>: <a href="http://talk.milkywayproject.org/#/subjects/<%= @s.zooniverse_id %>" target="_blank"><%= @s.zooniverse_id %></a></li>
-        <li><span class="key"><%= @s.dr1 ? "DR1" : "DR2" %></span></li>
+        <li><span class="key">State</span>: <%= @s.state %></li>
+        <li><span class="key">Activated</span>: <%= time_ago_in_words(@s.activated_at) %> ago</li>
+        <li><span class="key">Classifications</span>: <%= @s.classification_count %></li>
+        <li><span class="key">Talk</span>: <a href="http://talk<%= Milkman::Application.config.project["url"]%>/#/subjects/<%= @s.zooniverse_id %>" target="_blank"><%= @s.zooniverse_id %></a></li>
         <span class="stretch"></span></ul>
 </div>
 <div id="maps">
   <svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
-    <image xlink:href="<%= @s.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
+  <%- @opts = [@s.image, width, height] -%>
+  <%= render partial: "image", obj: @opts %>
 
     <% @results.each do |type,res| %>
       <% res["signal"].each do |k,arr| %>
         <% arr.each do |d| %>
-          <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", k, false] -%>
+          <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", k, "signal"] -%>
           <%= render partial: "#{type}", obj: @obj %>
         <% end %>
       <% end %>
@@ -29,7 +51,7 @@
     <% @results.each do |type,res| %>
       <% count = 0 %>
       <% res["reduced"].each do |d| %>
-        <%- @obj = [d, @s.zooniverse_id, scale, @hex[type], count, true] -%>
+        <%- @obj = [d, @s.zooniverse_id, scale, @hex[type], count, "reduced"] -%>
         <%= render partial: "#{type}", obj: @obj %>
         <% count+=1 %>
       <% end %>
@@ -42,8 +64,6 @@
       <table class="scan-results">
         <tr class="table-header">
           <td>Type</td>
-          <td>GLON</td>
-          <td>GLAT</td>
           <td>X (px)</td>
           <td>Y (px)</td>
           <td>RX</td>
@@ -55,15 +75,13 @@
         <% count=0 %>
         <% res["reduced"].each do |a| %>
         <% row+=1 %>
-          <tr class="<%= row%2==0 ? "even" : "odd" %>" onmouseover="$('[<%= type %>=<%= count %>]').css('opacity','0.5');" onmouseout="$('[<%= type %>=<%= count %>]').css('opacity','0');">
+          <tr class="<%= row%2==0 ? "even" : "odd" %>" onmouseover="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity','0.5');" onmouseout="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity','0');">
             <td> <%= @types.key(type) %></td>
-            <td> <%= sprintf "%.4f", a["glon"] %> &plusmn; <%= sprintf "%.4f", a["quality"]["qglon"] %></td>
-            <td> <%= sprintf "%.4f", a["glat"] %> &plusmn; <%= sprintf "%.4f", a["quality"]["qglat"] %></td>
             <td> <%= sprintf "%.1f", a["x"] %> &plusmn; <%= sprintf "%.1f", a["quality"]["qx"] %></td>
             <td> <%= sprintf "%.1f", a["y"] %> &plusmn; <%= sprintf "%.1f", a["quality"]["qy"] %></td>
-            <td> <%= sprintf "%.1f", a["rx"] %></td>
-            <td> <%= sprintf "%.1f", a["ry"] %></td>
-            <td> <%= sprintf "%.1f", a["angle"] %></td>
+            <td> 10</td>
+            <td> 10</td>
+            <td> 0</td>
           </tr>
           <% count+=1 %>
         <% end %>

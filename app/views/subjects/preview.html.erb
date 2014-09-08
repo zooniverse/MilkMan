@@ -1,17 +1,18 @@
-<% scale = 288/Milkman::Application.config.image["width"] %>
-<% width = Milkman::Application.config.image["width"]*scale %>
-<% height = Milkman::Application.config.image["height"]*scale %>
-<% @hex =  Milkman::Application.config.hex %>
-<% @types = Milkman::Application.config.types %>
+<% scale = 288/Milkman::Application.config.project["image"]["width"] %>
+<% width = Milkman::Application.config.project["image"]["width"]*scale %>
+<% height = Milkman::Application.config.project["image"]["height"]*scale %>
+<% @hex =  Milkman::Application.config.project["hex"] %>
+<% @types = Milkman::Application.config.project["types"] %>
 
 <div class="subject-preview">
 <svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
-  <image xlink:href="<%= @s.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
+  <%- @opts = [@s.image, width, height] -%>
+  <%= render partial: "image", obj: @opts %>
 
   <% @results.each do |type,res| %>
     <% res["signal"].each do |k,arr| %>
       <% arr.each do |d| %>
-          <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", k, false] -%>
+          <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", k, "signal"] -%>
           <%= render partial: "#{type}", obj: @obj %>
       <% end %>
     <% end %>
@@ -20,7 +21,7 @@
   <% @results.each do |type,res| %>
     <% count = 0 %>
     <% res["reduced"].each do |d| %>
-        <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", count, true] -%>
+        <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", count, "reduced"] -%>
         <%= render partial: "#{type}", obj: @obj %>
       <% count+=1 %>
     <% end %>

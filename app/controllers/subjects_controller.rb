@@ -4,15 +4,10 @@ class SubjectsController < ApplicationController
 
   def show
     @s = Subject.find_by_zooniverse_id(params[:zoo_id])
-    @pagetitle = Milkman::Application.config.project_name
+    @pagetitle = Milkman::Application.config.project["name"]
     
-    if @s.dr1 == true
-      @results = CatalogueObject.where(:glon => {:$gt => @s.glon-(@s.width/2.0), :$lt => @s.glon+(@s.width/2.0)}, :glat => {:$gt => @s.glat-(@s.height/2.0), :$lt => @s.glat+(@s.height/2.0)})
-      render "subjects/show_dr1"
-    else
-      @results = @s.cache_scan_result
-      render "subjects/show"
-    end
+    @results = @s.cache_scan_result
+    render "subjects/show"
   end
 
   def preview
@@ -24,22 +19,18 @@ class SubjectsController < ApplicationController
   end
 
   def coordinates
-    @pagetitle = "Milkman"
+    @pagetitle = Milkman::Application.config.project["name"]
     @subjects = Subject.find_in_range(params[:lon].to_f, params[:lat].to_f)
-  end
-
-  def simbad
-    @s = Subject.find_by_zooniverse_id(params[:zoo_id])
-    @pagetitle = "Milkman"
-    @simbad = @s.simbad_for_svg
-    # puts @simbad
-    render :layout => false
   end
 
   def raw
     @s = Subject.find_by_zooniverse_id(params[:zoo_id])
-    @raw = @s.annotations
-    @pagetitle = "Milkman"
+    begin
+      @raw = ScanResult.find_by_zooniverse_id(@s.zooniverse_id)
+    rescue
+      @raw = {}
+    end
+    @pagetitle = Milkman::Application.config.project["name"]
     render :layout => false
   end
 

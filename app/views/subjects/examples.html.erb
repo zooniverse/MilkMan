@@ -1,18 +1,12 @@
-<% width = Milkman::Application.config.image["width"] %>
-<% height = Milkman::Application.config.image["height"] %>
-<% @hex =  Milkman::Application.config.hex %>
-<% @types = Milkman::Application.config.types %>
+<% width = Milkman::Application.config.project["image"]["width"] %>
+<% height = Milkman::Application.config.project["image"]["height"] %>
+<% @hex =  Milkman::Application.config.project["hex"] %>
+<% @types = Milkman::Application.config.project["types"] %>
 
 <% @display.each do |id, results| %>
 <% s = Subject.find_by_zooniverse_id(id) %>
 <svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
   <image xlink:href="<%= s.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
-
-  <% results.each do |type,res| %>
-    <% res["noise"].each do |d| %>
-      <ellipse cx="<%= d["x"] %>" cy="<%= d["y"] %>" rx="<%= d["rx"] %>" ry="<%= d["ry"] %>" <%= type %>="-1" fill="#000000" stroke="black" fill-opacity="0" stroke-width="2" tabindex="0" opacity="0" transform="rotate(<%= d["angle"] %>, <%= d["x"] %>, <%= d["y"] %>)"></ellipse>
-    <% end %>
-  <% end %>
 
   <% results.each do |type,res| %>
     <% res["signal"].each do |k,arr| %>

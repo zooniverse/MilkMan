@@ -1,0 +1,15 @@
+<%- obj = @obj[0] -%>
+<%- zoo_id = @obj[1] -%>
+<%- scale = @obj[2] -%>
+<%- col = @obj[3] -%>
+<%- count = @obj[4] -%>
+<%- kind = @obj[5] -%>
+<%- rand = rand(10 ** 10).to_s.rjust(10,'0') -%>
+
+<%- tag = kind=="signal" ? "weird=#{zoo_id}-#{count}" : "" -%>
+<%- funcs = kind=="reduced" ? "onmouseover=$('[weird=#{zoo_id}-#{count}]').css('opacity','1.0'); onmouseout=$('[weird=#{zoo_id}-#{count}]').css('opacity','0');" : "" -%>
+<%- opacity = (kind=="reduced" || kind=="raw") ? 0.5 : 0 -%>
+
+<ellipse cx="<%= obj["x"]*scale %>" cy="<%= obj["y"]*scale %>" rx="10" ry="10" fill="#000000" stroke="#FFFFFF" fill-opacity="0" stroke-width="<%= 3*scale %>" tabindex="0" opacity="<%= opacity %>" <%= funcs %> <%= tag %> frame="<%= obj["frame"].to_i %>" ></ellipse>
+
+<ellipse cx="<%= obj["x"]*scale %>" cy="<%= obj["y"]*scale %>" rx="10" ry="10" fill="#000000" stroke="<%= col %>" fill-opacity="0" stroke-width="<%= 2*scale %>" tabindex="0" opacity="<%= opacity %>" <%= funcs %> <%= tag %> frame="<%= obj["frame"].to_i %>" ></ellipse>

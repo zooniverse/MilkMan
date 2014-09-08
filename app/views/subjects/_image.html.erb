@@ -1,0 +1,5 @@
+<%- c=0 -%>
+<%- @opts[0].each do |img| -%>
+	<image xlink:href="<%= img %>" preserveAspectRatio="xMidYMid meet" class="imageFrame" frame="<%= c %>" width="<%= @opts[1] %>" height="<%= @opts[2] %>"/>
+	<%- c+=1 -%>
+<%- end -%>

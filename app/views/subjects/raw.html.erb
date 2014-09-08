@@ -1,16 +1,25 @@
 <% scale = 0.597 %>
-<% width = Milkman::Application.config.image["width"]*scale %>
-<% height = Milkman::Application.config.image["height"]*scale %>
-<% @hex =  Milkman::Application.config.hex %>
-<% @types = Milkman::Application.config.types %>
+<% width = Milkman::Application.config.project["image"]["width"]*scale %>
+<% height = Milkman::Application.config.project["image"]["height"]*scale %>
+
+<script type="text/javascript">
+    $( document ).ready(function( $ ) {
+      $('.imageFrame[frame!=0]').hide();
+      $('ellipse[frame!=0]').hide();
+    });
+</script>
 
 <svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
-  <image xlink:href="<%= @s.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
-  <% count = 0 %>
-  <% @raw.each do |d| %>
-    <% colour = @hex[d["type"]] %>
-    <ellipse cx="<%= d["source"][0].to_f*scale %>" cy="<%= d["source"][1].to_f*scale %>" rx="<%= d["radius1"].to_f*scale %>" ry="<%= d["radius2"].to_f*scale %>" fill="#000000" stroke="<%= colour %>" fill-opacity="0" stroke-width="<%= 4*scale %>" tabindex="0" opacity="0.2" transform="rotate(<%= d["angle"] %>, <%= d["source"][0].to_f*scale %>, <%= d["source"][1].to_f*scale %>)" ></ellipse>
-    <% count+=1 %>
-  <% end %>
-  <text fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" text-anchor="left" y="<%= 632*scale %>" x="<%= 10*scale %>" >Raw Drawings</text>
+  <%- @opts = [@s.image, width, height] -%>
+  <%= render partial: "image", obj: @opts %>
+	<%- count=0 -%>
+	<%- Milkman::Application.config.project["object_types"].each do |type| -%>
+	<%- @raw.annotations[type]["raw"].each do |d| -%>
+		<%- new_d = {"x"=>d[0], "y"=>d[1], "frame"=>d[2]} -%>
+		<%- @obj = [new_d, @s.zooniverse_id, scale, Milkman::Application.config.project["hex"][type], count, "raw"] -%>
+        <%= render partial: "#{type}", obj: @obj %>
+		<%- count+=1 -%>
+	<%- end -%>
+	<%- end -%>
+  <text fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" text-anchor="left" y="<%= (Milkman::Application.config.project["image"]["height"]-15)*scale %>" x="<%= 10*scale %>" >Raw Drawings</text>
 </svg>

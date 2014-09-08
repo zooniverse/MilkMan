@@ -34,17 +34,12 @@ h1, h2, h3 {
     margin: 0 0 10px 0;
 }
 
+#frameChanger {
+  float: right;
+}
 
 #search-buttons button {
     display: inline-block;
-}
-
-#randomButton {
-  background: #E6241C;
-}
-
-#randomButton:hover {
-  background: #FD8272;
 }
 
 div.preview-holder {

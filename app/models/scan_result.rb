@@ -1,6 +1,6 @@
 class ScanResult
   include MongoMapper::Document
-  set_collection_name "#{Milkman::Application.config.project_slug}_scan_results"
+  set_collection_name "#{Milkman::Application.config.project["slug"]}_scan_results"
 
   key :zooniverse_id, String
   key :annotations, Hash

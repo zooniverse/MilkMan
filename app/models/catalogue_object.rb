@@ -1,6 +1,6 @@
 class CatalogueObject
   include MongoMapper::Document
-  set_collection_name "#{Milkman::Application.config.project_slug}_catalogue_objects"
+  set_collection_name "#{Milkman::Application.config.project["slug"]}_catalogue_objects"
 
   key :type, String
   key :glon, Float
