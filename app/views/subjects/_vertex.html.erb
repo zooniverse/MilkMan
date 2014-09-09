@@ -8,8 +8,8 @@
 
 <%- tag = kind=="signal" ? "vertex=#{zoo_id}-#{count}" : "" -%>
 <%- funcs = kind=="reduced" ? "onmouseover=$('[vertex=#{zoo_id}-#{count}]').css('opacity','1.0'); onmouseout=$('[vertex=#{zoo_id}-#{count}]').css('opacity','0');" : "" -%>
-<%- opacity = (kind=="reduced" || kind=="raw") ? 0.5 : 0 -%>
+<%- opacity = (kind=="reduced" || kind=="raw") ? 0.75 : 0 -%>
 
-<ellipse cx="<%= obj["x"]*scale %>" cy="<%= obj["y"]*scale %>" rx="10" ry="10" fill="#000000" stroke="#FFFFFF" fill-opacity="0" stroke-width="<%= 3*scale %>" tabindex="0" opacity="<%= opacity %>" <%= funcs %> <%= tag %> frame="<%= obj["frame"].to_i %>" ></ellipse>
+<ellipse cx="<%= obj["x"]*scale %>" cy="<%= obj["y"]*scale %>" rx="15" ry="15" fill="#000000" stroke="#FFFFFF" fill-opacity="0" stroke-width="<%= 3*scale %>" tabindex="0" opacity="<%= opacity %>" <%= funcs %> <%= tag %> frame="<%= obj["frame"].to_i %>" ></ellipse>
 
-<ellipse cx="<%= obj["x"]*scale %>" cy="<%= obj["y"]*scale %>" rx="10" ry="10" fill="#000000" stroke="<%= col %>" fill-opacity="0" stroke-width="<%= 2*scale %>" tabindex="0" opacity="<%= opacity %>" <%= funcs %> <%= tag %> frame="<%= obj["frame"].to_i %>" ></ellipse>
+<ellipse cx="<%= obj["x"]*scale %>" cy="<%= obj["y"]*scale %>" rx="15" ry="15" fill="#000000" stroke="<%= col %>" fill-opacity="0" stroke-width="<%= 2*scale %>" tabindex="0" opacity="<%= opacity %>" <%= funcs %> <%= tag %> frame="<%= obj["frame"].to_i %>" ></ellipse>

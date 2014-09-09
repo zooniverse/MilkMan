@@ -5,10 +5,10 @@ Milkman::Application.config.project = {
 	"slug" => "higgs_hunter",
 	"image" => { "width"=>1024.0, "height"=>1023.0 },
 	"object_types" => [ "vertex", "weird" ],
-	"hex" => { "vertex"=>"#ff9900", "weird"=>"#99ff00" },
+	"hex" => { "vertex"=>"#82DEFF", "weird"=>"#FF8F61" },
 	"types" => { "Vertex"=>"vertex", "Weird"=>"weird" },
 	"dbscan" => { "eps" => 20, "min" => 2 },
-	"styles" => { "action" => "#30C4FF", "action_hover" => "#8AD7FF", "accent" => "#A6D3FF" },
+	"styles" => { "action" => "#88cb84", "action_hover" => "#B7E7BA", "accent" => "#c75a5e" },
 	"min_random" => 3,
 	"example_zoo_id" => "AHH0000055"
 }
