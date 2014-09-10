@@ -81,42 +81,66 @@ class Subject
   end
 
   def dbscan_by_type(o,min_points,epsilon)
-    output = { "raw"=>[], "reduced"=>[], "signal"=>{}, "noise"=>[] }
+    output = { "raw"=>[], "reduced"=>[], "noise"=>[] }
     raw_scan = []
     objects = self.annotations_by_type(o)
     objects.each do |i|
-
-      if ["adult", "chick", "egg"].include?(o)
-        output["raw"] << [i["x"].to_f, i["y"].to_f, 0 ]
-        raw_scan << [i["x"].to_f, i["y"].to_f, 0 ]
-      end
 
       if ["vertex", "weird"].include?(o)
         output["raw"] << [i["x"].to_f, i["y"].to_f, i["frame"].to_i ]
         raw_scan << [i["x"].to_f, i["y"].to_f, 1000*i["frame"].to_i ]
       end
 
+      output_format = []
+      scan_format = []
+
+      Milkman::Application.config.project["dbscan"]["params"].each do |k,v|
+        output_format << i[k].to_f
+        scan_format << v*i[k].to_f
+      end
+
+      output["raw"] << output_format
+      raw_scan << scan_format
+
     end
 
+    keys = Milkman::Application.config.project["dbscan"]["params"].keys
+    vals = Milkman::Application.config.project["dbscan"]["params"].values
     dbscan = Clusterer.new( raw_scan, {:min_points => min_points, :epsilon => epsilon})
     dbscan.results.each do |k, arr|
       unless k==-1
-        output["signal"]["#{k}"] = arr.map{|i| { "x" => i[0], "y" => i[1], "frame" => i[2]/1000} }
+        
+        signals=[]
+        arr.each do |a|
+          item = {}
+          a.each_with_index do |i,n|
+            item[keys[n]] = (i/vals[n]).to_s=="NaN" ? 0.0 : i/vals[n]
+          end
+          signals << item
+        end
 
-        avx   = arr.transpose[0].inject{|sum, el| sum+el }.to_f/arr.size
-        avy   = arr.transpose[1].inject{|sum, el| sum+el }.to_f/arr.size
+        averages={}
+        arr.transpose.each_with_index do |a,n|
+          averages[keys[n]] = a.inject{|sum, el| sum+el }/arr.size
+        end
 
-        avf   = arr.transpose[2].inject{|sum, el| sum+el }.to_f/arr.size
-        avf = 0 if avf==nil
+        qualities={}
+        arr.transpose.each_with_index do |a,n|
+          qualities[keys[n]] = stdev(a)
+        end
+        
+        averages["quality"] = qualities
+        averages["signal"] = signals
+        output["reduced"] << averages
 
-        qy  = stdev(arr.transpose[0])
-        qx  = stdev(arr.transpose[1])
-
-        quality = { "qx"=>qx, "qy"=>qy }
-
-        output["reduced"] << { "x" => avx, "y" => avy, "frame" => avf/1000, "quality" => quality }
       else
-        output["noise"] = arr.map{|i| { "x" => i[0], "y" => i[1], "frame" => i[2]/1000 } }
+        
+        noises={}
+        arr.transpose.each_with_index do |i,n|
+          noises[keys[n]] = (i[n]/vals[n]).to_s=="NaN" ? 0.0 : i[n]/vals[n]
+        end
+        output["noise"] << noises
+
       end
     end
     return output
@@ -140,7 +164,7 @@ class Subject
   end
 
   def dbscan(min_points=Milkman::Application.config.project["dbscan"]["min"], epsilon=Milkman::Application.config.project["dbscan"]["eps"])
-    types = Milkman::Application.config.project["object_types"]
+    types = Milkman::Application.config.project["object_types"].keys
     result = {}
     types.each do |o|
       result[o] = self.dbscan_by_type(o,min_points, epsilon)

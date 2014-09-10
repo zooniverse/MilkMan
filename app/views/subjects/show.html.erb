@@ -1,8 +1,7 @@
 <% scale = 960.0/Milkman::Application.config.project["image"]["width"] %>
 <% width = Milkman::Application.config.project["image"]["width"]*scale %>
 <% height = Milkman::Application.config.project["image"]["height"]*scale %>
-<% @hex =  Milkman::Application.config.project["hex"] %>
-<% @types = Milkman::Application.config.project["types"] %>
+<% @types = Milkman::Application.config.project["object_types"] %>
 
 <%- if @s.image_count>0 -%>
 <button id="frameChanger">Frame <span id="frameDisplay">0</span></button>
@@ -40,22 +39,19 @@
   <%= render partial: "image", obj: @opts %>
 
     <% @results.each do |type,res| %>
-      <% res["signal"].each do |k,arr| %>
-        <% arr.each do |d| %>
-          <%- @obj = [d, @s.zooniverse_id, scale, "#ffffff", k, "signal"] -%>
-          <%= render partial: "#{type}", obj: @obj %>
+      <% res["reduced"].each_with_index do |d,i| %>
+        
+        <% d["signal"].each do |a| %>
+            <%- @obj = [a, @s.zooniverse_id, scale, "#ffffff", i, "signal"] -%>
+            <%= render partial: "#{type}", obj: @obj %>
         <% end %>
+
+        <%- @obj = [d, @s.zooniverse_id, scale, @types[type]["hex"], i, "reduced"] -%>
+        <%= render partial: "#{type}", obj: @obj %>
+
       <% end %>
     <% end %>
 
-    <% @results.each do |type,res| %>
-      <% count = 0 %>
-      <% res["reduced"].each do |d| %>
-        <%- @obj = [d, @s.zooniverse_id, scale, @hex[type], count, "reduced"] -%>
-        <%= render partial: "#{type}", obj: @obj %>
-        <% count+=1 %>
-      <% end %>
-    <% end %>
   </svg>
 </div>
 
@@ -63,25 +59,21 @@
   <div id="computed-info">
       <table class="scan-results">
         <tr class="table-header">
-          <td>Type</td>
-          <td>X (px)</td>
-          <td>Y (px)</td>
-          <td>RX</td>
-          <td>RY</td>
-          <td>PA/&deg;</td>
+        <td>Type</td>
+        <%- keys = Milkman::Application.config.project["dbscan"]["param_labels"].keys.each do |key| -%>
+          <td><%= Milkman::Application.config.project["dbscan"]["param_labels"][key] %></td>
+        <%- end -%>
         </tr>
         <% row=0 %>
+        <% count = 0 %>
         <% @results.each do |type,res| %>
-        <% count=0 %>
         <% res["reduced"].each do |a| %>
         <% row+=1 %>
           <tr class="<%= row%2==0 ? "even" : "odd" %>" onmouseover="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity','0.5');" onmouseout="$('[<%= type %>=<%= @s.zooniverse_id %>-<%= count %>]').css('opacity','0');">
-            <td> <%= @types.key(type) %></td>
-            <td> <%= sprintf "%.1f", a["x"] %> &plusmn; <%= sprintf "%.1f", a["quality"]["qx"] %></td>
-            <td> <%= sprintf "%.1f", a["y"] %> &plusmn; <%= sprintf "%.1f", a["quality"]["qy"] %></td>
-            <td> 10</td>
-            <td> 10</td>
-            <td> 0</td>
+            <td> <%= @types[type]["label"] %></td>
+            <%- keys = Milkman::Application.config.project["dbscan"]["param_labels"].keys.each do |key| -%>
+              <td> <%= sprintf "%.1f", a[key] %> &plusmn; <%= sprintf "%.1f", a["quality"][key] %></td>
+            <%- end -%>
           </tr>
           <% count+=1 %>
         <% end %>

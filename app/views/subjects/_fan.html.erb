@@ -1,0 +1,35 @@
+<%- fan = @obj[0] -%>
+<%- zoo_id = @obj[1] -%>
+<%- scale = @obj[2] -%>
+<%- col = @obj[3] -%>
+<%- count = @obj[4] -%>
+<%- primary = @obj[5] -%>
+<%- rand = rand(10 ** 10).to_s.rjust(10,'0') -%>
+
+<%- tag = primary==false ? "fan=#{zoo_id}-#{count}" : "" -%>
+<%- funcs = primary==true ? "onmouseover=$('[fan=#{zoo_id}-#{count}]').css('opacity','0.5'); onmouseout=$('[fan=#{zoo_id}-#{count}]').css('opacity','0');" : "" -%>
+<%- opacity = primary==true ? 0.5 : 0 -%>
+<%- radius = (0.5*Math.sin(fan["ry"]/(180/3.142))*fan["rx"]*scale).abs -%>
+<%- distance = fan["rx"]*scale -%>
+
+        <g transform="rotate(<%= fan["angle"] %>, <%= fan["x"]*scale %>, <%= fan["y"]*scale %>) translate(<%= fan["x"]*scale %>,<%= fan["y"]*scale %>)" style="fill:#000000;fill-opacity:0;stroke:#FFFFFF;stroke-width:8*<%= scale %>" opacity="<%= opacity %>" <%= funcs %> <%= tag %> >
+          <polygon points="0,0 <%= distance %>,0, <%= distance %>,<%= -radius %>, 0,0" />
+          <polygon points="0,0 <%= distance %>,0, <%= distance %>,<%= radius %>, 0,0" />
+            <defs>
+              <clipPath id="semi<%= rand %>">
+              <rect x="<%= distance-4 %>" y="<%= -4-radius %>" width="<%= 8+radius %>" height="<%= 8+(2*radius) %>" />
+            </clipPath>
+          </defs>
+          <circle clip-path="url(#semi<%= rand %>)" cx="<%= distance %>" cy="0" r="<%= radius %>"/>
+        </g>
+
+        <g transform="rotate(<%= fan["angle"] %>, <%= fan["x"]*scale %>, <%= fan["y"]*scale %>) translate(<%= fan["x"]*scale %>,<%= fan["y"]*scale %>)" style="fill:#000000;fill-opacity:0;stroke:<%= col %>;stroke-width:4*<%= scale %>" opacity="<%= opacity %>" <%= funcs %> <%= tag %> >
+          <polygon points="0,0 <%= distance %>,0, <%= distance %>,<%= -radius %>, 0,0" />
+          <polygon points="0,0 <%= distance %>,0, <%= distance %>,<%= radius %>, 0,0" />
+            <defs>
+              <clipPath id="semi<%= rand %>">
+              <rect x="<%= distance-4 %>" y="<%= -4-radius %>" width="<%= 8+radius %>" height="<%= 8+(2*radius) %>" />
+            </clipPath>
+          </defs>
+          <circle clip-path="url(#semi<%= rand %>)" cx="<%= distance %>" cy="0" r="<%= radius %>"/>
+        </g>
