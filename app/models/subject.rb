@@ -53,11 +53,13 @@ class Subject
     end
   end
 
-  def save_scan(data, type="dbscan")
+  def save_scan(data, eps, min, type="dbscan")
     s = ScanResult.create(
       :zooniverse_id => self.zooniverse_id,
       :subject_id => self.id,
       :type => type,
+      :eps => eps,
+      :min =>  min,
       :state => self.state,
       :classification_count => self.classification_count,
       :annotations => data
@@ -80,7 +82,7 @@ class Subject
     end
   end
 
-  def dbscan_by_type(o,min_points,epsilon)
+  def dbscan_by_type(o,epsilon,min_points)
     output = { "raw"=>[], "reduced"=>[], "noise"=>[] }
     raw_scan = []
     objects = self.annotations_by_type(o)
@@ -106,7 +108,7 @@ class Subject
 
     keys = Milkman::Application.config.project["dbscan"]["params"].keys
     vals = Milkman::Application.config.project["dbscan"]["params"].values
-    dbscan = Clusterer.new( raw_scan, {:min_points => min_points, :epsilon => epsilon})
+    dbscan = Clusterer.new( raw_scan, {:min_points => min_points.to_i, :epsilon => epsilon.to_f})
     dbscan.results.each do |k, arr|
       unless k==-1
         
@@ -150,15 +152,15 @@ class Subject
     return output
   end
 
-  def cache_scan_result()
-    res = ScanResult.first(:zooniverse_id => self.zooniverse_id)
+  def cache_scan_result(eps=Milkman::Application.config.project["dbscan"]["eps"], min=Milkman::Application.config.project["dbscan"]["min"])
+    res = ScanResult.first(:zooniverse_id => self.zooniverse_id, :eps => eps, :min => min)
     if res.nil?
       puts "Caching result for #{self.zooniverse_id}"
-      return self.dbscan
+      return self.dbscan(eps,min)
     else
       if (res.created_at < 30.days.ago && res.classification_count == self.classification_count)
-        ScanResult.find_all_by_zooniverse_id(self.zooniverse_id).each{|r|r.delete}
-        return self.dbscan
+        ScanResult.where(:zooniverse_id => self.zooniverse_id, :eps => eps, :min => min).each{|r|r.delete}
+        return self.dbscan(eps,min)
         puts "New result saved for #{self.zooniverse_id}"
       else
         # puts "Result found for #{self.zooniverse_id}"
@@ -167,22 +169,20 @@ class Subject
     end
   end
 
-  def dbscan(min_points=Milkman::Application.config.project["dbscan"]["min"], epsilon=Milkman::Application.config.project["dbscan"]["eps"])
+  def dbscan(epsilon=Milkman::Application.config.project["dbscan"]["eps"], min_points=Milkman::Application.config.project["dbscan"]["min"])
     types = Milkman::Application.config.project["object_types"].keys
     result = {}
     types.each do |o|
-      result[o] = self.dbscan_by_type(o,min_points, epsilon)
+      result[o] = self.dbscan_by_type(o, epsilon, min_points)
     end
-    save_scan(result, "dbscan")
+    save_scan(result, epsilon, min_points, "dbscan")
     return result
   end
 
-  def self.cache_results(n=10)
+  def self.cache_results(n=10, eps=Milkman::Application.config.project["dbscan"]["eps"], min=Milkman::Application.config.project["dbscan"]["min"])
     completed_ids = ScanResult.all.map{|s|s.zooniverse_id}
     Subject.where(:zooniverse_id.nin => completed_ids, :tutorial.ne => true).sort(:classification_count.desc).limit(n).each do |i|
-      i.cache_scan_result
-      k+=1
-      puts "#{k}/#{n}"
+      i.cache_scan_result(eps, min)
     end
   end
 

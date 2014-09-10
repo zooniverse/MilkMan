@@ -6,7 +6,10 @@ class SubjectsController < ApplicationController
     @s = Subject.find_by_zooniverse_id(params[:zoo_id])
     @pagetitle = Milkman::Application.config.project["name"]
     
-    @results = @s.cache_scan_result
+    eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
+    min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
+    @results = @s.cache_scan_result(eps,min)
+
     render "subjects/show"
   end
 
@@ -14,7 +17,9 @@ class SubjectsController < ApplicationController
     width = 400
     height = 200
     @s = Subject.find_by_zooniverse_id(params[:zoo_id])
-    @results = @s.cache_scan_result
+    eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
+    min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
+    @results = @s.cache_scan_result(eps,min)
     render :layout => false
   end
 

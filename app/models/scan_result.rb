@@ -5,6 +5,8 @@ class ScanResult
   key :zooniverse_id, String
   key :annotations, Hash
   key :type, String
+  key :eps, Float
+  key :min, Integer
   key :state, String
   key :classification_count, Integer
   timestamps!

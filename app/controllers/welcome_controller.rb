@@ -6,6 +6,7 @@ class WelcomeController < ApplicationController
     # Load 12 most-recently cached subjects
     @subjects = []
     @subjects = ScanResult.where(:zooniverse_id.ne => "AMW0000v75").sort(:created_at.desc).limit(12)
+    # BETTER
 
     # Preload 10 more if there are less than 100 preloaded already
     if ScanResult.where(:zooniverse_id.ne => "AMW0000v75").size < 18
