@@ -4,12 +4,31 @@
 # 	"url" => "huggshunters.org",
 # 	"slug" => "higgs_hunter",
 # 	"image" => { "width"=>1024.0, "height"=>1023.0 },
-# 	"object_types" => [ "vertex", "weird" ],
-# 	"hex" => { "vertex"=>"#82DEFF", "weird"=>"#FF8F61" },
-# 	"types" => { "Vertex"=>"vertex", "Weird"=>"weird" },
-# 	"dbscan" => { "eps" => 20, "min" => 2 },
+# 	"object_types" => {
+# 		"vertex" => {
+# 			"hex" => "#82DEFF",
+# 			"label" => "Vertex"
+# 		},
+# 		"weird" => {
+# 			"hex" => "#FF8F61",
+# 			"label" => "Weird"
+# 		}
+# 	},
+# 	"dbscan" => {
+# 		"eps" => 20,
+# 		"min" => 2,
+# 		"params" => {
+# 			"x" => 1,
+# 			"y" => 1,
+# 			"frame" => 1000
+# 		},
+# 		"param_labels" => {
+# 			"x" => "X (px)",
+# 			"y" => "Y (px)"
+# 		}
+# 	},
 # 	"styles" => { "action" => "#88cb84", "action_hover" => "#B7E7BA", "accent" => "#c75a5e" },
-# 	"min_random" => 3,
+# 	"min_random" => 5,
 # 	"example_zoo_id" => "AHH0000055"
 # }
 

@@ -121,7 +121,7 @@ class Subject
 
         averages={}
         arr.transpose.each_with_index do |a,n|
-          averages[keys[n]] = a.inject{|sum, el| sum+el }/arr.size
+          averages[keys[n]] = ((a.inject{|sum, el| sum+el }/arr.size)/vals[n]).to_s=="NaN" ? 0.0 : (a.inject{|sum, el| sum+el }/arr.size)/vals[n]
         end
 
         qualities={}
@@ -135,9 +135,13 @@ class Subject
 
       else
         
-        noises={}
-        arr.transpose.each_with_index do |i,n|
-          noises[keys[n]] = (i[n]/vals[n]).to_s=="NaN" ? 0.0 : i[n]/vals[n]
+        noises=[]
+        arr.each do |a|
+          item = {}
+          a.each_with_index do |i,n|
+            item[keys[n]] = (i/vals[n]).to_s=="NaN" ? 0.0 : i/vals[n]
+          end
+          noises << item
         end
         output["noise"] << noises
 
