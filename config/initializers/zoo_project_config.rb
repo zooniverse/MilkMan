@@ -13,17 +13,32 @@
 # 	"example_zoo_id" => "AHH0000055"
 # }
 
+# Milkman::Application.config.project = {
+# 	"name" => "Iced Milkman",
+# 	"project" => "Penguin Watch",
+# 	"url" => "penguinwatch.org",
+# 	"slug" => "penguin",
+# 	"image" => { "width"=>1000.0, "height"=>563.0 },
+# 	"object_types" => [ "adult", "chick", "egg"],
+# 	"hex" => { "adult"=>"#ff9900", "chick"=>"#99ff00", "egg"=>"#ffff00" },
+# 	"types" => { "Adult"=>"adult", "Chick"=>"chick", "Egg"=>"egg" },
+# 	"dbscan" => { "eps" => 20, "min" => 2 },
+# 	"styles" => { "action" => "#30C4FF", "action_hover" => "#8AD7FF", "accent" => "#A6D3FF" },
+# 	"min_random" => 2,
+# 	"example_zoo_id" => "APZ00003h1"
+# }
+
 Milkman::Application.config.project = {
-	"name" => "Iced Milkman",
-	"project" => "Penguin Watch",
-	"url" => "penguinwatch.org",
-	"slug" => "penguin",
+	"name" => "Martian Milkman",
+	"project" => "Planet Four",
+	"url" => "planetfour.org",
+	"slug" => "planet_four",
 	"image" => { "width"=>1000.0, "height"=>563.0 },
-	"object_types" => [ "adult", "chick", "egg"],
-	"hex" => { "adult"=>"#ff9900", "chick"=>"#99ff00", "egg"=>"#ffff00" },
-	"types" => { "Adult"=>"adult", "Chick"=>"chick", "Egg"=>"egg" },
+	"object_types" => [ "fan", "blotch"],
+	"hex" => { "adult"=>"#ff9900", "chick"=>"#99ff00" },
+	"types" => { "Adult"=>"adult", "Chick"=>"chick" },
 	"dbscan" => { "eps" => 20, "min" => 2 },
 	"styles" => { "action" => "#30C4FF", "action_hover" => "#8AD7FF", "accent" => "#A6D3FF" },
 	"min_random" => 2,
-	"example_zoo_id" => "APZ00003h1"
+	"example_zoo_id" => "APF0000s37"
 }
