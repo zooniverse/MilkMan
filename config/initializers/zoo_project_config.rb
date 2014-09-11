@@ -1,8 +1,45 @@
+# Milkman::Application.config.project = {
+# 	"name" => "Condor Milkman",
+# 	"project" => "Condor Watch",
+# 	"url" => "condorwatch.org",
+# 	"slug" => "condor",
+# 	"type_key" => "animal",
+# 	"image" => { "width"=>1200.0, "height"=>675.0 },
+# 	"object_types" => {
+# 		"condor" => {
+# 			"hex" => "#82DEFF",
+# 			"label" => "Condor"
+# 		},
+# 		"raven" => {
+# 			"hex" => "#FF8F61",
+# 			"label" => "Raven"
+# 		}
+# 	},
+# 	"dbscan" => {
+# 		"eps" => 20,
+# 		"min" => 2,
+# 		"params" => {
+# 			"x" => 1,
+# 			"y" => 1,
+# 			"frame" => 0
+# 		},
+# 		"param_labels" => {
+# 			"x" => "X (px)",
+# 			"y" => "Y (px)"
+# 		}
+# 	},
+# 	"styles" => { "action" => "#88cb84", "action_hover" => "#B7E7BA", "accent" => "#c75a5e" },
+# 	"min_random" => 5,
+# 	"example_zoo_id" => "ACW0004iss",
+# 	"tutorial_zoo_id" => "AMW0000v75"
+# }
+
 Milkman::Application.config.project = {
 	"name" => "Particle Milkman",
 	"project" => "Higgs Hunters",
 	"url" => "higgshunters.org",
 	"slug" => "higgs_hunter",
+	"type_key" => "value",
 	"image" => { "width"=>1024.0, "height"=>1023.0 },
 	"object_types" => {
 		"vertex" => {

@@ -46,8 +46,9 @@ class Subject
   end
 
   def annotations
+    type_key = Milkman::Application.config.project["type_key"]
     unless self.is_tutorial? #Exclude tutorial
-      list = self.classifications.map{|c|c.annotations}.map{|a| a[0].dig("value")}.map{|a| a.map{|k,v| v} if a.is_a?(Hash)}.flatten
+      list = self.classifications.map{|c|c.annotations}.map{|a| a[0].dig(type_key)}.map{|a| a.map{|k,v| v} if a.is_a?(Hash)}.flatten
     else
       return nil
     end
@@ -74,9 +75,9 @@ class Subject
   end
 
   def annotations_by_type(o="adult")
-    # self.annotations.select{|a| a if a["value"]==o}
+    type_key = Milkman::Application.config.project["type_key"]
     begin
-      return self.annotations.select{|a| a["value"]==o if !a.blank?}
+      return self.annotations.select{|a| a[type_key]==o if !a.blank?}
     rescue
       return []
     end
