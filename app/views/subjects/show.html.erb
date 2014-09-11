@@ -84,9 +84,10 @@
   </div>
 
   <div id="raw-<%= @s.zooniverse_id %>" class="raw-holder"></div>
+  
   <script type="text/javascript">
     $.ajax({
-      url: "/subjects/raw/<%= @s.zooniverse_id %>",
+      url: "/subjects/raw/<%= @s.zooniverse_id %>?eps=<%= @eps %>&min=<%= @min %>",
       cache: false,
       success: function(html){
         $("#raw-<%= @s.zooniverse_id %>").append(html);

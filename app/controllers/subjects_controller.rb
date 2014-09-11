@@ -14,12 +14,10 @@ class SubjectsController < ApplicationController
   end
 
   def preview
-    width = 400
-    height = 200
     @s = Subject.find_by_zooniverse_id(params[:zoo_id])
-    eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
-    min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
-    @results = @s.cache_scan_result(eps,min)
+    @eps = params[:eps]
+    @min = params[:min]
+    @results = @s.cache_scan_result(@eps,@min)
     render :layout => false
   end
 
@@ -30,8 +28,10 @@ class SubjectsController < ApplicationController
 
   def raw
     @s = Subject.find_by_zooniverse_id(params[:zoo_id])
+    @eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
+    @min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
     begin
-      @raw = ScanResult.find_by_zooniverse_id(@s.zooniverse_id)
+    @raw = ScanResult.first(:zooniverse_id => @s.zooniverse_id, :eps => @eps.to_i, :min => @min.to_i).annotations
     rescue
       @raw = {}
     end

@@ -5,7 +5,7 @@
       <div id="preview-<%= id %>" class="preview-holder"></div>
       <script type="text/javascript">
         $.ajax({
-          url: "/subjects/preview/<%= id %>",
+          url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
           cache: false,
           success: function(html){
             $("#preview-<%= id %>").append(html);

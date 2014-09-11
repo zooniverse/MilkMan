@@ -24,4 +24,5 @@
 
 </svg>
 </div>
-<a title="Explore Image" href="/subjects/<%= @s.zooniverse_id %>" class="preview-link">&rarr;</a>
+<%- phref = "/subjects/"+@s.zooniverse_id+"?eps="+@eps.to_s+"&min="+@min.to_s -%>
+<a title="Explore Image" href="<%= phref %>" class="preview-link">&rarr;</a>
