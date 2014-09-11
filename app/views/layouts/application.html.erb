@@ -23,12 +23,38 @@
   <%= csrf_meta_tag %>
 
   <script type="text/javascript">
+  function setGetParameter(paramName, paramValue) {
+      var url = window.location.href;
+      if (url.indexOf(paramName + "=") >= 0)
+      {
+          var prefix = url.substring(0, url.indexOf(paramName));
+          var suffix = url.substring(url.indexOf(paramName));
+          suffix = suffix.substring(suffix.indexOf("=") + 1);
+          suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
+          url = prefix + paramName + "=" + paramValue + suffix;
+      }
+      else
+      {
+      if (url.indexOf("?") < 0)
+          url += "?" + paramName + "=" + paramValue;
+      else
+          url += "&" + paramName + "=" + paramValue;
+      }
+      window.location.href = url;
+  }
+
   $( document ).ready(function() {
     function goToSearch(){
       q = $('#searchID').val();
       if (q.indexOf("A")>=0 && q.length==10) {
         console.log("Searching for Zooniverse ID "+q);
         window.location = ('/subjects/'+$('#searchID').val());
+      } else if (q.split(":").length==2 && q.split(":")[0]==="min" && !isNaN(parseFloat(q.split(":")[1]))) {
+        console.log("Changing DBSCAN min_points to "+q);
+        setGetParameter('min', q.split(":")[1]);
+      } else if (q.split(":").length==2 && q.split(":")[0]==="eps" && !isNaN(parseFloat(q.split(":")[1]))) {
+        console.log("Changing DBSCAN epsilon to "+q);
+        setGetParameter('eps', q.split(":")[1]);
       } else if (q.split(" ").length==2 && !isNaN(parseFloat(q.split(" ")[0])) && !isNaN(parseFloat(q.split(" ")[1]))) {
         console.log("Searching for coordinates "+q);
         window.location = ('/coordinates/?lon='+q.split(" ")[0]+'&lat='+q.split(" ")[1]);
@@ -70,8 +96,8 @@
 <h1><a href="/"><%= @pagetitle %></a></h1>
 
 <div id="search-buttons">
-  <input type="textbox" id="searchID" value="e.g. '<%= Milkman::Application.config.project["example_zoo_id"] %>'" onfocus="$('#searchID').val('');" onblur="$('#searchID').filter(function() { return $(this).val() == ''; }).val(\"e.g. '<%= Milkman::Application.config.project["example_zoo_id"] %>'\");" />
-  <button id="searchButton" type="submit">Search</button>
+  <input type="textbox" id="searchID" value="e.g. '<%= Milkman::Application.config.project["example_zoo_id"] %>', 'min:5', 'eps:30'" onfocus="$('#searchID').val('');" onblur="$('#searchID').filter(function() { return $(this).val() == ''; }).val(\"e.g. '<%= Milkman::Application.config.project["example_zoo_id"] %>', 'min:5', 'eps:30'\");" />
+  <button id="searchButton" type="submit">Go</button>
   <button id="randomButton" type="submit">Random Image</button>
 </div>
 

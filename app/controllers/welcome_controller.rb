@@ -11,9 +11,9 @@ class WelcomeController < ApplicationController
     scans.each{|sr| @subject_ids << sr.zooniverse_id }
     @subject_ids = @subject_ids.uniq
 
-    # Preload 10 more if there are less than 100 preloaded already
+    # Preload more if there are not enough preloaded already
     if ScanResult.where(:zooniverse_id.ne => Milkman::Application.config.project["tutorial_zoo_id"], :eps => eps, :min => min).size < 18
-      Subject.cache_results(n=3)
+      Subject.cache_results(n=3,eps,min)
     end
   end
 end
