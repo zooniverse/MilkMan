@@ -1,7 +1,7 @@
-<h4>Some Examples</h4>
+<h4>Recently Clustered</h4>
 <div id="preview-gallery">
-  <% if (@subject_ids.size > 0) %>
-    <% @subject_ids.each do |id| %>
+  <% if (@recent_subject_ids.size > 0) %>
+    <% @recent_subject_ids.each do |id| %>
       <div id="preview-<%= id %>" class="preview-holder"></div>
       <script type="text/javascript">
         $.ajax({
@@ -17,5 +17,23 @@
     <div id="loading-data">
         <p>Try again in 30 seconds - data is still loading.</p>
     </div>
+  <% end %>
+</div>
+
+<h4>Most Classifications</h4>
+<div id="preview-gallery">
+  <% if (@recent_subject_ids.size > 0) %>
+    <% @recent_subject_ids.each do |id| %>
+      <div id="preview-recent-<%= id %>" class="preview-holder"></div>
+      <script type="text/javascript">
+        $.ajax({
+          url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
+          cache: false,
+          success: function(html){
+            $("#preview-recent-<%= id %>").append(html);
+          }
+        });
+      </script>
+    <% end %>
   <% end %>
 </div>
