@@ -1,14 +1,14 @@
 <h4>Some Examples</h4>
 <div id="preview-gallery">
-  <% if (@subjects.size > 0) %>
-    <% @subjects.each do |s| %>
-      <div id="preview-<%= s.zooniverse_id %>" class="preview-holder"></div>
+  <% if (@subject_ids.size > 0) %>
+    <% @subject_ids.each do |id| %>
+      <div id="preview-<%= id %>" class="preview-holder"></div>
       <script type="text/javascript">
         $.ajax({
-          url: "/subjects/preview/<%= s.zooniverse_id %>",
+          url: "/subjects/preview/<%= id %>",
           cache: false,
           success: function(html){
-            $("#preview-<%= s.zooniverse_id %>").append(html);
+            $("#preview-<%= id %>").append(html);
           }
         });
       </script>

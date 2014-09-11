@@ -35,7 +35,6 @@ class SubjectsController < ApplicationController
     rescue
       @raw = {}
     end
-    @pagetitle = Milkman::Application.config.project["name"]
     render :layout => false
   end
 

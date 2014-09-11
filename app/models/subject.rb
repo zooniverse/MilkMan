@@ -88,16 +88,11 @@ class Subject
     objects = self.annotations_by_type(o)
     objects.each do |i|
 
-      if ["vertex", "weird"].include?(o)
-        output["raw"] << [i["x"].to_f, i["y"].to_f, i["frame"].to_i ]
-        raw_scan << [i["x"].to_f, i["y"].to_f, 1000*i["frame"].to_i ]
-      end
-
-      output_format = []
+      output_format = {}
       scan_format = []
 
       Milkman::Application.config.project["dbscan"]["params"].each do |k,v|
-        output_format << i[k].to_f
+        output_format[k] = i[k].to_f
         scan_format << v*i[k].to_f
       end
 
