@@ -46,9 +46,9 @@ class Subject
   end
 
   def annotations
-    type_key = Milkman::Application.config.project["type_key"]
+    # type_key = Milkman::Application.config.project["type_key"]
     unless self.is_tutorial? #Exclude tutorial
-      list = self.classifications.map{|c|c.annotations}.map{|a| a[0].dig(type_key)}.map{|a| a.map{|k,v| v} if a.is_a?(Hash)}.flatten
+      list = self.classifications.map{|c| c.annotations }.flatten.select{|i| i["key"]=="marking" }.map{|a| a["value"]}
     else
       return nil
     end
