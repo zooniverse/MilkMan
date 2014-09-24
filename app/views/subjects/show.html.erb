@@ -31,7 +31,7 @@
         <li><span class="key">Classifications</span>: <%= @s.classification_count %></li>
         <li><span class="key">DBSCAN Min</span>: <%= @min %></li>
         <li><span class="key">DBSCAN Eps</span>: <%= @eps %></li>
-        <li><span class="key">Talk</span>: <a href="http://talk<%= Milkman::Application.config.project["url"]%>/#/subjects/<%= @s.zooniverse_id %>" target="_blank"><%= @s.zooniverse_id %></a></li>
+        <li><span class="key">Talk</span>: <a href="http://talk.<%= Milkman::Application.config.project["url"]%>/#/subjects/<%= @s.zooniverse_id %>" target="_blank"><%= @s.zooniverse_id %></a></li>
         <span class="stretch"></span></ul>
 </div>
 <div id="maps">
