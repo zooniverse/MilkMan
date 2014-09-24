@@ -1,6 +1,6 @@
 <% scale = 0.597 %>
-<% width = Milkman::Application.config.project["image"]["width"]*scale %>
-<% height = Milkman::Application.config.project["image"]["height"]*scale %>
+<% width = @s.width*scale %>
+<% height = @s.height*scale %>
 <% @types = Milkman::Application.config.project["object_types"] %>
 
 <script type="text/javascript">
@@ -10,7 +10,7 @@
     });
 </script>
 
-<svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
+<svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width.to_s %> <%= height.to_s %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
   <%- @opts = [@s.image, width, height] -%>
   <%= render partial: "image", obj: @opts %>
 	<%- Milkman::Application.config.project["object_types"].keys.each do |type| -%>
@@ -19,5 +19,5 @@
 	        <%= render partial: "#{type}", obj: @obj %>
 		<%- end -%>
 	<%- end -%>
-  <text fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" text-anchor="left" y="<%= (Milkman::Application.config.project["image"]["height"]-15)*scale %>" x="<%= 10*scale %>" >Raw Drawings</text>
+  <text fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" text-anchor="left" y="<%= (@s.height-15)*scale %>" x="<%= 10*scale %>" >Raw Drawings</text>
 </svg>

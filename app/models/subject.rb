@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'json'
+require 'fastimage'
 
 class Hash
   def dig(*path)
@@ -217,11 +218,11 @@ class Subject
   end
 
   def width
-    return Milkman::Application.config.project["image"]["width"]/Milkman::Application.config.project["image"]["height"]
+    return FastImage.size(self.image[0])[0]
   end
 
   def height
-    return 1.0
+    return FastImage.size(self.image[0])[1]
   end
 
   def pixel_scale

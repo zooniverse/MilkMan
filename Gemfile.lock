@@ -38,12 +38,6 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
-    better_errors (2.1.1)
-      coderay (>= 1.0.0)
-      erubis (>= 2.6.6)
-      rack (>= 0.9.0)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
     bson (1.9.2)
     bson_ext (1.9.2)
       bson (~> 1.9.2)
@@ -56,6 +50,8 @@ GEM
     debug_inspector (0.0.2)
     distance_measures (0.0.6)
     erubis (2.7.0)
+    fastimage (1.6.3)
+      addressable (~> 2.3, >= 2.3.5)
     geocoder (1.1.9)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -139,6 +135,7 @@ DEPENDENCIES
   binding_of_caller
   bson_ext
   dbscan
+  fastimage
   jquery-rails
   k_means
   mongo_mapper

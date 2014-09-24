@@ -93,8 +93,8 @@ Milkman::Application.config.project = {
 		}
 	},
 	"dbscan" => {
-		"eps" => 20,
-		"min" => 2,
+		"eps" => 15,
+		"min" => 3,
 		"params" => {
 			"x" => 1,
 			"y" => 1,
