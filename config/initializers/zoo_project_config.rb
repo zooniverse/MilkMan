@@ -71,25 +71,81 @@
 # 	"tutorial_zoo_id" => "AMW0000v75"
 # }
 
+# Milkman::Application.config.project = {
+#   "name" => "Iced Milkman",
+#   "project" => "Penguin Watch",
+#   "url" => "penguinwatch.org",
+#   "slug" => "penguin",
+#   "type_key" => "value",
+#   "image" => { "width"=>1000.0, "height"=>563.0 },
+#   "object_types" => {
+#     "adult" => {
+#       "hex" => "#ff9900",
+#       "label" => "Adult"
+#     },
+#     "chick" => {
+#       "hex" => "#99ff00",
+#       "label" => "Chick"
+#     },
+#     "egg" => {
+#       "hex" => "#ffff00",
+#       "label" => "Egg"
+#     }
+#   },
+#   "dbscan" => {
+#     "eps" => 15,
+#     "min" => 3,
+#     "params" => {
+#       "x" => 1,
+#       "y" => 1,
+#       "frame" => 0
+#     },
+#     "param_labels" => {
+#       "x" => "X (px)",
+#       "y" => "Y (px)"
+#     }
+#   },
+#   "styles" => { "action" => "#30C4FF", "action_hover" => "#8AD7FF", "accent" => "#A6D3FF" },
+#   "min_random" => 2,
+#   "example_zoo_id" => "APZ00003h1",
+#   "tutorial_zoo_id" => "AMW0000v75"
+# }
+
 Milkman::Application.config.project = {
-	"name" => "Iced Milkman",
-	"project" => "Penguin Watch",
-	"url" => "penguinwatch.org",
-	"slug" => "penguin",
+	"name" => "Illustrated Milkman",
+	"project" => "Science Gossip",
+	"url" => "sciencegossip.org",
+	"slug" => "illustratedlife",
 	"type_key" => "value",
 	"image" => { "width"=>1000.0, "height"=>563.0 },
 	"object_types" => {
-		"adult" => {
+		"drawing" => {
 			"hex" => "#ff9900",
-			"label" => "Adult"
+			"label" => "Drawing"
 		},
-		"chick" => {
+		"chart" => {
 			"hex" => "#99ff00",
-			"label" => "Chick"
+			"label" => "Chart"
 		},
-		"egg" => {
+		"photograph" => {
 			"hex" => "#ffff00",
-			"label" => "Egg"
+			"label" => "Photograph"
+		},
+		"map" => {
+			"hex" => "#ffff00",
+			"label" => "Map"
+		},
+    "species" => {
+			"hex" => "#99ff00",
+			"label" => "Species"
+		},
+		"inscription" => {
+			"hex" => "#ffff00",
+			"label" => "Inscription"
+		},
+		"contributor" => {
+			"hex" => "#ffff00",
+			"label" => "Contributor"
 		}
 	},
 	"dbscan" => {
