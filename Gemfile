@@ -14,6 +14,11 @@ gem "k_means"
 
 gem "fastimage"
 
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
