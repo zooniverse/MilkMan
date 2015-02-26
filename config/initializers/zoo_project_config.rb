@@ -119,30 +119,38 @@ Milkman::Application.config.project = {
 	"type_key" => "value",
 	"image" => { "width"=>1000.0, "height"=>563.0 },
 	"object_types" => {
-		"species" => {
-			"hex" => "#663300",
-			"label" => "Species"
+    "drawing" => {
+			"hex" => "#330000",
+			"label" => "Drawing"
 		},
-		"inscription" => {
+		"chart" => {
 			"hex" => "#99ff00",
-			"label" => "Inscription"
+			"label" => "Chart"
 		},
-		"contributor" => {
+		"photograph" => {
 			"hex" => "#ffff00",
-			"label" => "Contributor"
+			"label" => "Photograph"
+		},
+		"map" => {
+			"hex" => "#ffff00",
+			"label" => "Map"
 		}
 	},
 	"dbscan" => {
-		"eps" => 300,
-		"min" => 1,
+		"eps" => 150,
+		"min" => 2,
 		"params" => {
-			"x" => 1,
-			"y" => 1,
+			"left" => 1,
+			"top" => 1,
+      "width" => 1,
+      "height" => 1,
 			"frame" => 0
 		},
 		"param_labels" => {
-			"x" => "X (px)",
-			"y" => "Y (px)"
+			"left" => "X (px)",
+			"top" => "Y (px)",
+      "width" => "Width",
+      "height" => "Height"
 		}
 	},
 	"styles" => { "action" => "#30C4FF", "action_hover" => "#8AD7FF", "accent" => "#A6D3FF" },
