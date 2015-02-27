@@ -136,15 +136,15 @@ Milkman::Application.config.project = {
 			"label" => "Map"
 		},
     "species" => {
-			"hex" => "#330000",
+			"hex" => "#ff0000",
 			"label" => "Species"
 		},
 		"inscription" => {
-			"hex" => "#99ff00",
+			"hex" => "#00ff00",
 			"label" => "Inscription"
 		},
 		"contributor" => {
-			"hex" => "#ffff00",
+			"hex" => "#0000ff",
 			"label" => "Contributor"
 		}
 	},
