@@ -87,7 +87,10 @@
   
   <div id="notes" class="">
     <% @s.annotations.each do |a|%>
-      <p><%= a['details'] && a['details']['keywords'] %></p>
+      <p>Species: <%= a['subject'] %></p>
+      <p>Inscription: <%= a['inscription'] %></p>
+      <p>Contributor: <%= a['contributor'] %></p>
+      <p>Keywords: <%= a['details'] && a['details']['keywords'] %></p>
     <% end %>
   </div>
   
