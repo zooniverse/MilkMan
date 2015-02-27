@@ -134,12 +134,26 @@ Milkman::Application.config.project = {
 		"map" => {
 			"hex" => "#ffff00",
 			"label" => "Map"
+		},
+    "species" => {
+			"hex" => "#330000",
+			"label" => "Species"
+		},
+		"inscription" => {
+			"hex" => "#99ff00",
+			"label" => "Inscription"
+		},
+		"contributor" => {
+			"hex" => "#ffff00",
+			"label" => "Contributor"
 		}
 	},
 	"dbscan" => {
 		"eps" => 150,
 		"min" => 2,
 		"params" => {
+      "x" => 1,
+      "y" => 1,
 			"left" => 1,
 			"top" => 1,
       "width" => 1,
@@ -147,6 +161,8 @@ Milkman::Application.config.project = {
 			"frame" => 0
 		},
 		"param_labels" => {
+      "x" => "X (px)",
+      "y" => "Y (px)",
 			"left" => "X (px)",
 			"top" => "Y (px)",
       "width" => "Width",
