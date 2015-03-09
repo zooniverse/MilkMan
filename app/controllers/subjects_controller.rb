@@ -14,6 +14,16 @@ class SubjectsController < ApplicationController
       puts v
       v['reduced'].each do |mark|
         case k
+        when 'drawing', 'chart', 'map', 'photograph'
+          votes = {}
+          mark['labels'].each do |label|
+            keywords = label['details']['keywords'].split(/[;,]\s*/)
+            keywords.each do |keyword|
+              votes[keyword] ||= 0
+              votes[keyword] += 1
+            end
+          end
+          mark['labels'] = votes
         when 'species'
           votes = self.gather_votes(['common', 'scientific'], mark['labels'], 'subject')
           mark['labels'] = votes
