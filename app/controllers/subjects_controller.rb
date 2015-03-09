@@ -17,7 +17,11 @@ class SubjectsController < ApplicationController
         when 'drawing', 'chart', 'map', 'photograph'
           votes = {}
           mark['labels'].each do |label|
-            keywords = label['details']['keywords'].split(/[;,]\s*/)
+            if label['details'] == nil
+              keywords = []
+            else
+              keywords = label['details']['keywords'].split(/[;,]\s*/)
+            end
             keywords.each do |keyword|
               votes[keyword] ||= 0
               votes[keyword] += 1
