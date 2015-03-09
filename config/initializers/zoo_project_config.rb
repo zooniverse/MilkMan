@@ -170,7 +170,7 @@ Milkman::Application.config.project = {
 		}
 	},
 	"styles" => { "action" => "#30C4FF", "action_hover" => "#8AD7FF", "accent" => "#A6D3FF" },
-	"min_random" => 2,
+	"min_random" => 15,
 	"example_zoo_id" => "APZ00003h1",
 	"tutorial_zoo_id" => "AMW0000v75"
 }

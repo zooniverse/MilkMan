@@ -72,7 +72,7 @@ class Subject
   end
 
   def self.random
-    s = ScanResult.where(:classification_count => {:$gte => Milkman::Application.config.project["min_random"]})
+    s = Subject.where(:classification_count => {:$gte => Milkman::Application.config.project["min_random"]})
     s.skip(rand(s.size-1)).first
   end
 
