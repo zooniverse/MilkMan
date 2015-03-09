@@ -8,7 +8,7 @@ class WelcomeController < ApplicationController
 
     # Load 12 illustrated subjects
     @illustrated_subject_ids = []
-    subjects = Subject.where('metadata.has_illustrations_count' => 15).sort(:classification_count.desc).limit(9)
+    subjects = Subject.where('metadata.has_illustrations_count' => 15).sort(:classification_count.asc).limit(9)
     subjects.each{|sr| @illustrated_subject_ids << sr.zooniverse_id }
     @illustrated_subject_ids = @illustrated_subject_ids.uniq
     
