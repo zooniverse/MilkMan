@@ -60,10 +60,11 @@
   <div id="computed-info">
       <table class="scan-results">
         <tr class="table-header">
-        <td>Type</td>
+        <th>Type</th>
         <%- keys = Milkman::Application.config.project["dbscan"]["param_labels"].keys.each do |key| -%>
-          <td><%= Milkman::Application.config.project["dbscan"]["param_labels"][key] %></td>
+          <th><%= Milkman::Application.config.project["dbscan"]["param_labels"][key] %></th>
         <%- end -%>
+        <th>Label</th>
         </tr>
         <% row=0 %>
         <% count = 0 %>
@@ -75,6 +76,7 @@
             <%- keys = Milkman::Application.config.project["dbscan"]["param_labels"].keys.each do |key| -%>
               <td> <%= sprintf "%.1f", a[key] %> &plusmn; <%= sprintf "%.1f", a["quality"][key] %></td>
             <%- end -%>
+            <td><%= a['labels'] %></td>
           </tr>
           <% count+=1 %>
         <% end %>
