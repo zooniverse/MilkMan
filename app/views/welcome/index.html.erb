@@ -2,13 +2,13 @@
 <div id="preview-gallery">
   <% if (@illustrated_subject_ids.size > 0) %>
     <% @illustrated_subject_ids.each do |id| %>
-      <div id="preview-illustrated-<%= id %>" class="preview-holder"></div>
+      <div id="preview-illustrated-<%= id %>" class="preview-holder">Loading…</div>
       <script type="text/javascript">
         $.ajax({
           url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
           cache: false,
           success: function(html){
-            $("#preview-illustrated-<%= id %>").append(html);
+            $("#preview-illustrated-<%= id %>").html(html);
           }
         });
       </script>
@@ -24,13 +24,13 @@
 <div id="preview-gallery">
   <% if (@recent_subject_ids.size > 0) %>
     <% @recent_subject_ids.each do |id| %>
-      <div id="preview-<%= id %>" class="preview-holder"></div>
+      <div id="preview-<%= id %>" class="preview-holder">Loading…</div>
       <script type="text/javascript">
         $.ajax({
           url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
           cache: false,
           success: function(html){
-            $("#preview-<%= id %>").append(html);
+            $("#preview-<%= id %>").html(html);
           }
         });
       </script>
@@ -46,13 +46,13 @@
 <div id="preview-gallery">
   <% if (@recent_subject_ids.size > 0) %>
     <% @recent_subject_ids.each do |id| %>
-      <div id="preview-recent-<%= id %>" class="preview-holder"></div>
+      <div id="preview-recent-<%= id %>" class="preview-holder">Loading…</div>
       <script type="text/javascript">
         $.ajax({
           url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
           cache: false,
           success: function(html){
-            $("#preview-recent-<%= id %>").append(html);
+            $("#preview-recent-<%= id %>").html(html);
           }
         });
       </script>
