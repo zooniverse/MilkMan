@@ -8,8 +8,8 @@ class WelcomeController < ApplicationController
 
     # Load 12 illustrated subjects
     @illustrated_subject_ids = []
-    subjects = Subject.where('metadata.has_illustrations_count' => 15).sort(:classification_count.asc).limit(9)
-    subjects.each{|sr| @illustrated_subject_ids << sr.zooniverse_id }
+    subjects = Subject.where('metadata.has_illustrations_count' => 15, :classification_count.lte => 25)
+    subjects.limit(9).skip(rand(subjects.size-1)).each{|sr| @illustrated_subject_ids << sr.zooniverse_id }
     @illustrated_subject_ids = @illustrated_subject_ids.uniq
     
     # Load 12 most-recently cached subjects
