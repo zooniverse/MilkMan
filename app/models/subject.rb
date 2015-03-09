@@ -88,6 +88,7 @@ class Subject
   def dbscan_by_type(o,epsilon,min_points)
     output = { "raw"=>[], "reduced"=>[], "noise"=>[] }
     raw_scan = []
+    labels = []
     objects = self.annotations_by_type(o)
     objects.each do |i|
 
@@ -101,21 +102,33 @@ class Subject
 
       output["raw"] << output_format
       raw_scan << scan_format
+      case o
+      when 'drawing', 'chart', 'photograph', 'map'
+        labels << i['details']
+      when 'species'
+        labels << i['subject']
+      when 'inscription'
+        labels << i['inscription']
+      when 'contributor'
+        labels << [i['name'], i['role']]
+      end
 
     end
 
     keys = Milkman::Application.config.project["dbscan"]["params"].keys
     vals = Milkman::Application.config.project["dbscan"]["params"].values
-    dbscan = Clusterer.new( raw_scan, {:min_points => min_points.to_i, :epsilon => epsilon.to_f})
+    dbscan = Clusterer.new( raw_scan, {:min_points => min_points.to_i, :epsilon => epsilon.to_f, :labels => labels})
     dbscan.results.each do |k, arr|
       unless k==-1
         
         signals=[]
-        arr.each do |a|
+        labels = dbscan.labeled_results[k]
+        arr.each_with_index do |a,n|
           item = {}
           a.each_with_index do |i,n|
             item[keys[n]] = (i/vals[n]).to_s=="NaN" ? 0.0 : i/vals[n]
           end
+          item['label'] = labels[n]
           signals << item
         end
 
@@ -131,6 +144,7 @@ class Subject
         
         averages["quality"] = qualities
         averages["signal"] = signals
+        averages['labels'] = labels
         output["reduced"] << averages
 
       else
