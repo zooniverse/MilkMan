@@ -89,29 +89,26 @@ class Subject
     output = { "raw"=>[], "reduced"=>[], "noise"=>[] }
     raw_scan = []
     labels = []
+    label_keys = Milkman::Application.config.project["object_types"][o]['data_keys']
     objects = self.annotations_by_type(o)
     objects.each do |i|
 
       output_format = {}
       scan_format = []
+      label = {}
+      label_keys.each do |k|
+        label[k] = i[k]
+      end
+      labels << label
 
       Milkman::Application.config.project["dbscan"]["params"].each do |k,v|
         output_format[k] = i[k].to_f
         scan_format << v*i[k].to_f
       end
+      output_format['label'] = label
 
       output["raw"] << output_format
       raw_scan << scan_format
-      case o
-      when 'drawing', 'chart', 'photograph', 'map'
-        labels << i['details']
-      when 'species'
-        labels << i['subject']
-      when 'inscription'
-        labels << i['inscription']
-      when 'contributor'
-        labels << [i['name'], i['role']]
-      end
 
     end
 
@@ -119,16 +116,16 @@ class Subject
     vals = Milkman::Application.config.project["dbscan"]["params"].values
     dbscan = Clusterer.new( raw_scan, {:min_points => min_points.to_i, :epsilon => epsilon.to_f, :labels => labels})
     dbscan.results.each do |k, arr|
+      labels = dbscan.labeled_results[k]
       unless k==-1
         
         signals=[]
-        labels = dbscan.labeled_results[k]
-        arr.each_with_index do |a,n|
+        arr.each_with_index do |a,m|
           item = {}
           a.each_with_index do |i,n|
             item[keys[n]] = (i/vals[n]).to_s=="NaN" ? 0.0 : i/vals[n]
           end
-          item['label'] = labels[n]
+          item['label'] = labels[m]
           signals << item
         end
 
@@ -150,11 +147,12 @@ class Subject
       else
         
         noises=[]
-        arr.each do |a|
+        arr.each_with_index do |a,m|
           item = {}
           a.each_with_index do |i,n|
             item[keys[n]] = (i/vals[n]).to_s=="NaN" ? 0.0 : i/vals[n]
           end
+          item['label'] = labels[m]
           noises << item
         end
         output["noise"] << noises
