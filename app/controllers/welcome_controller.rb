@@ -6,6 +6,12 @@ class WelcomeController < ApplicationController
     @min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
     @tutorial = Milkman::Application.config.project["tutorial_zoo_id"]
 
+    # Load 12 illustrated subjects
+    @illustrated_subject_ids = []
+    subjects = Subject.where('metadata.has_illustrations_count' => 15).sort(:classification_count.desc).limit(9)
+    subjects.each{|sr| @illustrated_subject_ids << sr.zooniverse_id }
+    @illustrated_subject_ids = @illustrated_subject_ids.uniq
+    
     # Load 12 most-recently cached subjects
     @recent_subject_ids = []
     scans = ScanResult.where(:zooniverse_id.ne => @tutorial, :eps => @eps.to_i, :min => @min.to_i).sort(:created_at.desc).limit(9)

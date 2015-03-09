@@ -1,3 +1,25 @@
+<h4>Illustrations</h4>
+<div id="preview-gallery">
+  <% if (@illustrated_subject_ids.size > 0) %>
+    <% @illustrated_subject_ids.each do |id| %>
+      <div id="preview-illustrated-<%= id %>" class="preview-holder"></div>
+      <script type="text/javascript">
+        $.ajax({
+          url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
+          cache: false,
+          success: function(html){
+            $("#preview-illustrated-<%= id %>").append(html);
+          }
+        });
+      </script>
+    <% end %>
+  <% else %>
+    <div id="loading-data">
+        <p>Try again in 30 seconds - data is still loading.</p>
+    </div>
+  <% end %>
+</div>
+
 <h4>Recently Clustered</h4>
 <div id="preview-gallery">
   <% if (@recent_subject_ids.size > 0) %>
