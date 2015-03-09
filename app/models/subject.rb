@@ -120,28 +120,31 @@ class Subject
       unless k==-1
         
         signals=[]
+        averages={}
+        qualities={}
+        averages['labels'] = []
         arr.each_with_index do |a,m|
           item = {}
           a.each_with_index do |i,n|
             item[keys[n]] = (i/vals[n]).to_s=="NaN" ? 0.0 : i/vals[n]
           end
           item['label'] = labels[m]
+          averages['labels'] << labels[m]
           signals << item
         end
 
-        averages={}
+        
         arr.transpose.each_with_index do |a,n|
           averages[keys[n]] = ((a.inject{|sum, el| sum+el }/arr.size)/vals[n]).to_s=="NaN" ? 0.0 : (a.inject{|sum, el| sum+el }/arr.size)/vals[n]
         end
 
-        qualities={}
+        
         arr.transpose.each_with_index do |a,n|
           qualities[keys[n]] = stdev(a)
         end
         
         averages["quality"] = qualities
         averages["signal"] = signals
-        averages['labels'] = labels
         output["reduced"] << averages
 
       else
