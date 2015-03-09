@@ -6,8 +6,8 @@
 <%- kind = @obj[5] -%>
 <%- rand = rand(10 ** 10).to_s.rjust(10,'0') -%>
 
-<%- tag = kind=="signal" ? "adult=#{zoo_id}-#{count}" : "" -%>
-<%- funcs = kind=="reduced" ? "onmouseover=$('[adult=#{zoo_id}-#{count}]').css('opacity','1.0'); onmouseout=$('[adult=#{zoo_id}-#{count}]').css('opacity','0');" : "" -%>
+<%- tag = kind=="signal" ? "photograph=#{zoo_id}-#{count}" : "" -%>
+<%- funcs = kind=="reduced" ? "onmouseover=$('[photograph=#{zoo_id}-#{count}]').css('opacity','1.0'); onmouseout=$('[photograph=#{zoo_id}-#{count}]').css('opacity','0');" : "" -%>
 <%- opacity = (kind=="reduced" || kind=="raw") ? 0.5 : 0 -%>
 <rect x="<%= obj["left"]*scale %>" y="<%= obj["top"]*scale %>" width="<%= obj["width"]*scale %>" height="<%= obj["height"]*scale %>" fill="#000000" stroke="#FFFFFF" fill-opacity="0" stroke-width="<%= 3*scale %>" tabindex="0" opacity="<%= opacity %>" <%= funcs %> <%= tag %> frame="<%= obj["frame"].to_i %>" ></rect>
 
