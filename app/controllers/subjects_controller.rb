@@ -27,14 +27,19 @@ class SubjectsController < ApplicationController
               votes[keyword] += 1
             end
           end
-          mark['labels'] = votes
+          votes = {'keywords' => votes}
+          mark['labels'] = [votes]
         when 'species'
           votes = self.gather_votes(['common', 'scientific'], mark['labels'], 'subject')
-          mark['labels'] = votes
+          mark['labels'] = [votes]
         when 'contributor'
           name_votes = self.gather_votes(['name'], mark['labels'], 'name')
           role_votes = self.gather_votes(['role'], mark['labels'], 'role')
           mark['labels'] = [name_votes, role_votes]
+        when 'inscription'
+          votes = self.gather_votes(['text'], mark['labels'], 'inscription')
+          votes = {'text' => votes}
+          mark['labels'] = [votes['text']]
         end
       end
     end

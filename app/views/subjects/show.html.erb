@@ -76,7 +76,16 @@
             <%- keys = Milkman::Application.config.project["dbscan"]["param_labels"].keys.each do |key| -%>
               <td> <%= sprintf "%.1f", a[key] %> &plusmn; <%= sprintf "%.1f", a["quality"][key] %></td>
             <%- end -%>
-            <td><%= a['labels'] %></td>
+            <td>
+              <% a['labels'].each do |label| %>
+                <% label.each do |k,v| %>
+                  <b><%= k %></b>
+                  <% v.each do |text,count| %>
+                    <i><%= text.empty? ? 'blank' : text %></i> (<%= count %>)
+                  <% end %>
+                <% end %>
+              <% end %>
+            </td>
           </tr>
           <% count+=1 %>
         <% end %>
