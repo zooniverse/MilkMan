@@ -50,6 +50,15 @@ module Milkman
 
     config.after_initialize do
         Subject.ensure_index [[:coords, 1]], :sparse => true
+        Subject.ensure_index [[:zooniverse_id, 1]], :sparse => true
+        Subject.ensure_index [['group.zooniverse_id', 1]], :sparse => true
+        Subject.ensure_index [['metadata.has_illustrations_count', 1]], :sparse => true
+        Subject.ensure_index [[:state, 1]], :sparse => true
+        Classification.ensure_index [[:subject_ids, 1]], :sparse => true
+        ScanResult.ensure_index [[:zooniverse_id, 1]], :sparse => true
+        ScanResult.ensure_index [[:state, 1]], :sparse => true
+        ScanResult.ensure_index [[:eps, 1]], :sparse => true
+        ScanResult.ensure_index [[:min, 1]], :sparse => true
     end
 
     # Configure sensitive parameters which will be filtered from the log file.
