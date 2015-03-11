@@ -38,8 +38,7 @@ class SubjectsController < ApplicationController
           mark['labels'] = [name_votes, role_votes]
         when 'inscription'
           votes = self.gather_votes(['text'], mark['labels'], 'inscription')
-          votes = {'text' => votes}
-          mark['labels'] = [votes['text']]
+          mark['labels'] = [votes]
         end
       end
     end
