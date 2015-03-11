@@ -33,6 +33,8 @@ class Subject
   # timestamps
 
   scope :near_to, lambda {|centre| where(:id => {'$in' => Subject.near(centre)}) }
+  
+  STATUSES = ['active', 'inactive', 'complete', 'disabled']
 
   def is_tutorial?
     return self.respond_to?('tutorial') ? TRUE : FALSE
@@ -44,6 +46,14 @@ class Subject
 
   def user_names
     self.classifications.map{|c|c.user_name}.uniq
+  end
+  
+  def self.counts
+    c = {}
+    for status in STATUSES
+      c[status] = Subject.count(:state => status)
+    end
+    c
   end
 
   def annotations

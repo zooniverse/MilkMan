@@ -5,6 +5,7 @@ class WelcomeController < ApplicationController
     @eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
     @min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
     @tutorial = Milkman::Application.config.project["tutorial_zoo_id"]
+    @counts = Subject.counts
 
     # Load 12 illustrated subjects
     @illustrated_subject_ids = []
