@@ -1,3 +1,8 @@
+<ul class="status-list">
+  <% @counts.each do |key, value| %>
+  <li><b><%= key %> pages</b>: <%= value %></li>
+  <% end %>
+</ul>
 <h4>Random Illustrations</h4>
 <div id="preview-gallery">
   <% if (@illustrated_subject_ids.size > 0) %>
