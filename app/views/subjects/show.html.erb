@@ -27,7 +27,7 @@
 
 <div id="catalogue-info">
     <ul>
-        <li><span class="key">Activated</span> <%= time_ago_in_words(@s.activated_at) %> ago</li>
+        <li><span class="key">Activated</span> <%= "#{time_ago_in_words(@s.activated_at)} ago" unless @s.state.in? ['inactive', 'disabled'] %></li>
         <li><span class="key">Classifications</span>: <%= @s.classification_count %></li>
         <li><span class="key">Status</span>: <%= @s.state %></li>
         <li><span class="key">Min</span>: <%= @min %></li>

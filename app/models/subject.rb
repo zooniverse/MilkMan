@@ -35,7 +35,7 @@ class Subject
   scope :near_to, lambda {|centre| where(:id => {'$in' => Subject.near(centre)}) }
   
   STATUSES = ['active', 'inactive', 'complete', 'disabled']
-
+  
   def is_tutorial?
     return self.respond_to?('tutorial') ? TRUE : FALSE
   end
