@@ -11,7 +11,7 @@
       <script type="text/javascript">
         $.ajax({
           url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
-          cache: false,
+          cache: true,
           success: function(html){
             $("#preview-illustrated-<%= id %>").html(html);
           }
@@ -33,7 +33,7 @@
       <script type="text/javascript">
         $.ajax({
           url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
-          cache: false,
+          cache: true,
           success: function(html){
             $("#preview-<%= id %>").html(html);
           }
@@ -55,7 +55,7 @@
       <script type="text/javascript">
         $.ajax({
           url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
-          cache: false,
+          cache: true,
           success: function(html){
             $("#preview-recent-<%= id %>").html(html);
           }
