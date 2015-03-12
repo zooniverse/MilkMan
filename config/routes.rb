@@ -5,7 +5,9 @@ Milkman::Application.routes.draw do
 
   get "subjects/index"
 
+<<<<<<< 7199ffd0884ce79366f6c713713bbf44dd892337
   get 'subjects/:zoo_id' => 'subjects#show'
+  get 'page/:page_id' => 'subjects#page'
   get 'coordinates' => 'subjects#coordinates'
   get 'subjects/preview/:zoo_id' => 'subjects#preview'
   get 'subjects/simbad/:zoo_id' => 'subjects#simbad'

@@ -3,7 +3,7 @@ class SubjectsController < ApplicationController
   end
 
   def show
-    @s = Subject.find_by_zooniverse_id(params[:zoo_id])
+    @s ||= Subject.find_by_zooniverse_id(params[:zoo_id])
     @pagetitle = Milkman::Application.config.project["name"]
     
     @eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
@@ -44,6 +44,11 @@ class SubjectsController < ApplicationController
     end
 
     render "subjects/show"
+  end
+  
+  def page
+    @s = Subject.first('metadata.page_id' => params[:page_id])
+    self.show()
   end
 
   def preview
