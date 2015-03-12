@@ -6,6 +6,7 @@ Milkman::Application.routes.draw do
   get "subjects/index"
 
   match 'subjects/:zoo_id' => 'subjects#show'
+  match 'page/:page_id' => 'subjects#page'
   match 'coordinates' => 'subjects#coordinates'
   match 'subjects/preview/:zoo_id' => 'subjects#preview'
   match 'subjects/simbad/:zoo_id' => 'subjects#simbad'
