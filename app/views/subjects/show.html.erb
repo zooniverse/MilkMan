@@ -93,6 +93,12 @@
         <% end %>
         <% end %>
       </table>
+      <h4>Page keywords</h4>
+      <p>
+        <% @keywords.each do |text,count| %>
+          <i><%= text.empty? ? 'blank' : text %></i> (<%= count %>)
+        <% end %>
+      </p>
       <div style="clear:both;"></div>
   </div>
 
