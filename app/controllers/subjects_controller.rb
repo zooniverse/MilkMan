@@ -41,6 +41,18 @@ class SubjectsController < ApplicationController
           mark['labels'] = [votes]
         end
       end
+      
+      votes = {}
+      @s.annotations.each do |a|
+        if a.is_a?(String)
+          keywords = a.split(/[;,]\s*/)
+          keywords.each do |k|
+            votes[k] ||= 0
+            votes[k] += 1
+          end
+        end
+      end
+      @keywords = votes
     end
 
     render "subjects/show"
