@@ -1,0 +1,59 @@
+<div>
+  <div style="display:inline-block">
+    <h2>Complete</h2>
+    <ol>
+    <% @groups.select{|t| t['state'] == 'complete' }.each do |group| %>
+      <li>
+        <a href="/groups/<%= group.zooniverse_id %>"><%= group.metadata['title'] %></a> (<%= group.completed %>%) <b>(<%= group.classifications_per_page %>)</b>
+        <p>Complete: <%= group.stats['complete'] %><br>
+          Active: <%= group.stats['active'] %><br>
+          Inactive: <%= group.stats['inactive'] %><br>
+          Paused: <%= group.stats['paused'] %></p>
+      </li>
+    <% end %>
+    </ol>
+  </div>
+  <div style="display:inline-block">
+    <h2>Active</h2>
+    <ol>
+    <% @groups.select{|t| t['state'] == 'active' }.each do |group| %>
+      <li>
+        <a href="/groups/<%= group.zooniverse_id %>"><%= group.metadata['title'] %></a> (<%= group.completed %>%) <b>(<%= group.classifications_per_page %>)</b>
+        <p>Complete: <%= group.stats['complete'] %><br>
+          Active: <%= group.stats['active'] %><br>
+          Inactive: <%= group.stats['inactive'] %><br>
+          Paused: <%= group.stats['paused'] %></p>
+    
+      </li>
+    <% end %>
+    </ol>
+  </div>
+  <div style="display:inline-block">
+    <h2>Inactive</h2>
+    <ol>
+    <% @groups.select{|t| t['state'] == 'inactive' }.each do |group| %>
+      <li>
+        <a href="/groups/<%= group.zooniverse_id %>"><%= group.metadata['title'] %></a> (<%= group.completed %>%) <b>(<%= group.classifications_per_page %>)</b>
+        <p>Complete: <%= group.stats['complete'] %><br>
+          Active: <%= group.stats['active'] %><br>
+          Inactive: <%= group.stats['inactive'] %><br>
+          Paused: <%= group.stats['paused'] %></p>
+      </li>
+    <% end %>
+    </ol>
+  </div>
+  <div style="display:inline-block">
+    <h2>Paused</h2>
+    <ol>
+    <% @groups.select{|t| t['state'] == 'paused' }.each do |group| %>
+      <li>
+        <a href="/groups/<%= group.zooniverse_id %>"><%= group.metadata['title'] %></a> (<%= group.completed %>%) <b>(<%= group.classifications_per_page %>)</b>
+        <p>Complete: <%= group.stats['complete'] %><br>
+          Active: <%= group.stats['active'] %><br>
+          Inactive: <%= group.stats['inactive'] %><br>
+          Paused: <%= group.stats['paused'] %></p>
+      </li>
+    <% end %>
+    </ol>
+  </div>
+</div>
