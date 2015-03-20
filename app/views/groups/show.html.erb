@@ -2,7 +2,7 @@
 <p><%= @g.stats['complete'] %>/<%= @g.stats['total'] %> pages complete.</p>
 <p>Status: <%= @g.state %></p>
 <p>
-<% for page in 1..@num_pages do%>
+<% for page in @first_page..@last_page do%>
   <% unless page == @page %>
    <a href="/groups/<%= @g.zooniverse_id %>/<%= page %>"><%= page %></a>
   <% else %>

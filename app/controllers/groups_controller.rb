@@ -9,10 +9,10 @@ class GroupsController < ApplicationController
     @page = params[:page].to_i
     @pagetitle = Milkman::Application.config.project["name"]
   	@g ||= Group.find_by_zooniverse_id(params[:zoo_id])
-    @num_pages = @g.stats['total'].to_f / 20
-    @num_pages = @num_pages.ceil
-    @next_page = @page + 1
-    @prev_page = @page - 1
+    num_pages = @g.stats['total'].to_f / 20
+    num_pages = num_pages.ceil
+    @first_page = [@page - 10, 1].max
+    @last_page = [@first_page + 19, num_pages].min
   end
 
 
