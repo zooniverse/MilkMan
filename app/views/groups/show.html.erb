@@ -1,6 +1,15 @@
+<p><%= @g.metadata['title'] %></p>
 <p><%= @g.stats['complete'] %>/<%= @g.stats['total'] %> pages complete.</p>
 <p>Status: <%= @g.state %></p>
-<p><a href="/groups/<%= @g.zooniverse_id %>/<%= @prev_page %>">Page <%= @prev_page %></a> <a href="/groups/<%= @g.zooniverse_id %>/<%= @next_page %>">Page <%= @next_page %></a></p>
+<p>
+<% for page in 1..@num_pages do%>
+  <% unless page == @page %>
+   <a href="/groups/<%= @g.zooniverse_id %>/<%= page %>"><%= page %></a>
+  <% else %>
+    <%= page %>
+  <% end %>
+<% end %>
+</p>
 <ul id="preview-gallery">
   <% @g.pages(@page).each do |subject| %>
   <li id="preview-recent-<%= subject.zooniverse_id %>" class="preview-holder">
