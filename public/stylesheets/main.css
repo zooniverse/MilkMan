@@ -47,7 +47,7 @@ h1, h2, h3 {
   background: #FD8272;
 }
 
-div.preview-holder {
+.preview-holder {
   display: inline-block;
   margin: 0 15px 10px 0;
   position: relative;
