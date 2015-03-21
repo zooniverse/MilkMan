@@ -19,10 +19,10 @@ class WelcomeController < ApplicationController
     scans.each{|sr| @recent_subject_ids << sr.zooniverse_id }
     @recent_subject_ids = @recent_subject_ids.uniq
 
-    # Load 12 most-classified subjects
+    # Load 9 controversial subjects
     @subject_ids = []
-    subs = Subject.where(:state => 'complete').sort(:classification_count.desc).limit(9)
-    subs.each{|sr| @subject_ids << sr.zooniverse_id }
+    subs = Subject.where(:classification_count.gte => 20, :state => 'complete')
+    subs.limit(9).skip(rand(subs.size-1)).sort(:classification_count.desc).each{|sr| @subject_ids << sr.zooniverse_id }
     @subject_ids = @subject_ids.uniq
 
     # Preload more if there are not enough preloaded already
