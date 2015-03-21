@@ -24,7 +24,6 @@
 
 </script>
 <%- end -%>
-
 <div id="catalogue-info">
     <ul>
         <li><span class="key">Activated</span> <%= "#{time_ago_in_words(@s.activated_at)} ago" unless @s.state.in? ['inactive', 'disabled'] %></li>
@@ -93,6 +92,11 @@
         <% end %>
         <% end %>
       </table>
+      <p>
+        <b>No illustrations:</b> <%= @s.metadata['no_illustrations_count']%><br>
+        <b>Has illustrations:</b> <%= @s.metadata['has_illustrations_count']%><br>
+        <b>Skipped:</b> <%= @s.metadata['skip_count']%>
+      </p>
       <h4>Page keywords</h4>
       <p>
         <% @keywords.each do |text,count| %>
