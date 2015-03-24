@@ -244,11 +244,27 @@ class Subject
   end
 
   def width
-    return FastImage.size(self.image[0])[0]
+    begin
+      return self.image_size[0]
+    rescue
+      return 0
+    end
   end
 
   def height
-    return FastImage.size(self.image[0])[1]
+    begin
+      return self.image_size[1]
+    rescue
+      return 0
+    end
+  end
+  
+  def image_size
+    begin
+      return FastImage.size(self.image[0], :raise_on_failure=>true)
+    rescue
+      return [self.metadata["original_size"]["width"], self.metadata["original_size"]["height"]]
+    end
   end
 
   def pixel_scale
