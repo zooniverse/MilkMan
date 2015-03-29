@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
 
     # Load 12 illustrated subjects
     @illustrated_subject_ids = []
-    subjects = Subject.where('metadata.has_illustrations_count' => {:$gte => 15}, 'metadata.no_illustrations_count' => {:$lte => 5}, :state => 'complete')
+    subjects = Subject.where('metadata.has_illustrations_count' => {:$gte => 15}, :classification_count.lte => 25, :state => 'complete')
     subjects.limit(9).skip(rand(subjects.size-1)).each{|sr| @illustrated_subject_ids << sr.zooniverse_id }
     @illustrated_subject_ids = @illustrated_subject_ids.uniq
     
