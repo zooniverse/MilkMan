@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
 
     # Load 12 illustrated subjects
     @illustrated_subject_ids = []
-    subjects = Subject.where('metadata.has_illustrations_count' => {:$gte => 15}, :classification_count.lte => 25, :state => 'complete')
+    subjects = Subject.where('metadata.has_illustrations_count' => {:$gte => 10}, :classification_count.lte => 20, :state => 'complete')
     subjects.limit(9).skip(rand(subjects.size-1)).each{|sr| @illustrated_subject_ids << sr.zooniverse_id }
     @illustrated_subject_ids = @illustrated_subject_ids.uniq
     
@@ -21,7 +21,7 @@ class WelcomeController < ApplicationController
 
     # Load 9 controversial subjects
     @subject_ids = []
-    subs = Subject.where(:classification_count.gt => 25, :state => 'complete')
+    subs = Subject.where(:classification_count.gt => 20, :state => 'complete')
     subs.limit(9).skip(rand(subs.size-1)).sort(:classification_count.desc).each{|sr| @subject_ids << sr.zooniverse_id }
     @subject_ids = @subject_ids.uniq
 
