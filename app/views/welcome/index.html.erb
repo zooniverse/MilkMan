@@ -22,9 +22,9 @@
 
 <h4>Most Classifications</h4>
 <div id="preview-gallery">
-  <% if (@recent_subject_ids.size > 0) %>
-    <% @recent_subject_ids.each do |id| %>
-      <div id="preview-recent-<%= id %>" class="preview-holder"></div>
+  <% if (@subject_ids.size > 0) %>
+    <% @subject_ids.each do |id| %>
+      <div id="preview-recent-<%= id %>" class="preview-holder">Loading…</div>
       <script type="text/javascript">
         $.ajax({
           url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
