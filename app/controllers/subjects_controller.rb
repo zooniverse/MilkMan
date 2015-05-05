@@ -1,5 +1,13 @@
 class SubjectsController < ApplicationController
   def index
+    @state = params[:status]
+    @page = params[:page].to_i
+    subjects = Subject.fields(:zooniverse_id, :location).where(:state => @state)
+    @g ||= subjects.paginate({:per_page => 20, :page => @page})
+    num_pages = subjects.size / 20
+    num_pages = num_pages.ceil
+    @first_page = [@page - 10, 1].max
+    @last_page = [@first_page + 19, num_pages].min
   end
 
   def show

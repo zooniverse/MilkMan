@@ -13,6 +13,7 @@ Milkman::Application.routes.draw do
   match 'subjects/preview/:zoo_id' => 'subjects#preview'
   match 'subjects/simbad/:zoo_id' => 'subjects#simbad'
   match 'subjects/raw/:zoo_id' => 'subjects#raw'
+  match 'subjects(/:status)(/:page)' => 'subjects#index', defaults: {status: 'active', page: 1}
 
   match 'catalogues/dr2/bubbles' => 'catalogue_objects#bubbles'
 
