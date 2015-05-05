@@ -1,2 +1,26 @@
-<h1>Subjects#index</h1>
-<p>Find me in app/views/subjects/index.html.erb</p>
+<p>Status: <%= @state %></p>
+<p>
+<% for page in @first_page..@last_page do%>
+  <% unless page == @page %>
+   <a href="/subjects/<%= @state %>/<%= page %>"><%= page %></a>
+  <% else %>
+    <%= page %>
+  <% end %>
+<% end %>
+</p>
+<ul id="preview-gallery">
+  <% @g.each do |subject| %>
+  <li id="preview-recent-<%= subject.zooniverse_id %>" class="preview-holder">
+    Loading…
+    <script type="text/javascript">
+      $.ajax({
+        url: "/subjects/preview/<%= subject.zooniverse_id %>",
+        cache: true,
+        success: function(html){
+          $("#preview-recent-<%= subject.zooniverse_id %>").html(html);
+        }
+      });
+    </script>
+  </li>
+  <% end %>
+</ul>
