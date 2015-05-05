@@ -1,8 +1,8 @@
-<p>Status: <%= @state %></p>
+<p>Status: <%= @state %> (<%= @size %> records)</p>
 <p>
 <% for page in @first_page..@last_page do%>
   <% unless page == @page %>
-   <a href="/subjects/<%= @state %>/<%= page %>"><%= page %></a>
+   <a href="/subjects/<%= @state %>/<%= page %><%= "?has_illustrations=" + params[:has_illustrations] if params[:has_illustrations] %>"><%= page %></a>
   <% else %>
     <%= page %>
   <% end %>
