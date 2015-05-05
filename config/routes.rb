@@ -5,7 +5,6 @@ Milkman::Application.routes.draw do
 
   get "subjects/index"
 
-
   get 'groups' => 'groups#index'
   get 'groups/:zoo_id(/:page)' => 'groups#show', defaults: { page: 1 }
   get 'subjects/:zoo_id' => 'subjects#show'
@@ -14,6 +13,7 @@ Milkman::Application.routes.draw do
   get 'subjects/preview/:zoo_id' => 'subjects#preview'
   get 'subjects/simbad/:zoo_id' => 'subjects#simbad'
   get 'subjects/raw/:zoo_id' => 'subjects#raw'
+  get 'subjects(/:status)(/:page)' => 'subjects#index', defaults: {status: 'active', page: 1}
 
   get 'catalogues/dr2/bubbles' => 'catalogue_objects#bubbles'
 
