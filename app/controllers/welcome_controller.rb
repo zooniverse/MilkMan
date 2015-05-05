@@ -4,13 +4,13 @@ class WelcomeController < ApplicationController
     @pagetitle = Milkman::Application.config.project["name"]
     @eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
     @min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
-    has_illustrations = params[:has_illustrations].to_i || 10
+    has_illustrations = params[:has_illustrations] || 10
     @tutorial = Milkman::Application.config.project["tutorial_zoo_id"]
     @counts = Subject.counts
 
     # Load 12 illustrated subjects
     @illustrated_subject_ids = []
-    subjects = Subject.where('metadata.has_illustrations_count' => {:$gte => has_illustrations}, :classification_count.lte => 20)
+    subjects = Subject.where('metadata.has_illustrations_count' => {:$gte => has_illustrations.to_i}, :classification_count.lte => 20)
     @illustrated_subject_count = subjects.size
     subjects.limit(9).skip(rand(@illustrated_subject_count-1)).each{|sr| @illustrated_subject_ids << sr.zooniverse_id }
     @illustrated_subject_ids = @illustrated_subject_ids.uniq
