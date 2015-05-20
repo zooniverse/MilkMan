@@ -190,7 +190,7 @@ Milkman::Application.config.project = {
 	"image" => { "width"=>1000.0, "height"=>563.0 },
 	"object_types" => {
     "flowering" => {
-			"hex" => "#330000",
+			"hex" => "#006600",
 			"label" => "Flowering Stage",
       "data_keys" => ["flowering"]
 		},
@@ -199,11 +199,11 @@ Milkman::Application.config.project = {
 			"label" => "Insects"
 		},
 		"barcode" => {
-			"hex" => "#ffff00",
+			"hex" => "#660066",
 			"label" => "Barcode"
 		},
 		"specimen-label" => {
-			"hex" => "#ffff00",
+			"hex" => "#006666",
 			"label" => "Specimen Label"
 		}
 	},
