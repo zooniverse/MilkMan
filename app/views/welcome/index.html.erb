@@ -3,49 +3,6 @@
   <li><b><%= key %> pages</b>: <%= value %></li>
   <% end %>
 </ul>
-<h4>Random Illustrations (out of <%= @illustrated_subject_count %>)</h4>
-<div id="preview-gallery">
-  <% if (@illustrated_subject_ids.size > 0) %>
-    <% @illustrated_subject_ids.each do |id| %>
-      <div id="preview-illustrated-<%= id %>" class="preview-holder">Loading…</div>
-      <script type="text/javascript">
-        $.ajax({
-          url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
-          cache: true,
-          success: function(html){
-            $("#preview-illustrated-<%= id %>").html(html);
-          }
-        });
-      </script>
-    <% end %>
-  <% else %>
-    <div id="loading-data">
-        <p>Try again in 30 seconds - data is still loading.</p>
-    </div>
-  <% end %>
-</div>
-
-<h4>No Illustrations Found (out of <%= @empty_subject_count %>)</h4>
-<div id="preview-gallery">
-  <% if (@empty_subject_ids.size > 0) %>
-    <% @empty_subject_ids.each do |id| %>
-      <div id="preview-empty-<%= id %>" class="preview-holder">Loading…</div>
-      <script type="text/javascript">
-        $.ajax({
-          url: "/subjects/preview/<%= id %>?eps=<%= @eps %>&min=<%= @min %>",
-          cache: true,
-          success: function(html){
-            $("#preview-empty-<%= id %>").html(html);
-          }
-        });
-      </script>
-    <% end %>
-  <% else %>
-    <div id="loading-data">
-        <p>Try again in 30 seconds - data is still loading.</p>
-    </div>
-  <% end %>
-</div>
 
 <h4>Recently Clustered</h4>
 <div id="preview-gallery">

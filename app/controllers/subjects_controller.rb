@@ -25,20 +25,18 @@ class SubjectsController < ApplicationController
       puts v
       v['reduced'].each do |mark|
         case k
-        when 'drawing', 'chart', 'map', 'photograph'
+        when 'flowering'
           votes = {}
           mark['labels'].each do |label|
-            if label['details'] == nil
-              keywords = []
+            if label['flowering'] == nil
+              keyword = 'blank'
             else
-              keywords = label['details']['keywords'].split(/[;,]\s*/)
+              keyword = label['flowering']
             end
-            keywords.each do |keyword|
-              votes[keyword] ||= 0
-              votes[keyword] += 1
-            end
+            votes[keyword] ||= 0
+            votes[keyword] += 1
           end
-          votes = {'keywords' => votes}
+          votes = {'flowering' => votes}
           mark['labels'] = [votes]
         when 'species'
           votes = self.gather_votes(['common', 'scientific'], mark['labels'], 'subject')
@@ -55,6 +53,7 @@ class SubjectsController < ApplicationController
       
       votes = {}
       @s.annotations.each do |a|
+        puts a
         if a.is_a?(String)
           keywords = a.split(/[;,]\s*/)
           keywords.each do |k|

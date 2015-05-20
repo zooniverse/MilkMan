@@ -18,7 +18,7 @@ class Group
     @pages ||= []
     offset = (page - 1) * 20
     if @pages.empty?
-      Subject.fields(:zooniverse_id, :location).sort('metadata.page_id').limit(20).skip( offset ).find_each('group.zooniverse_id' => self.zooniverse_id ) do |g|
+      Subject.fields(:zooniverse_id, :location).limit(20).skip( offset ).find_each('group.zooniverse_id' => self.zooniverse_id ) do |g|
         @pages << g
       end
     end

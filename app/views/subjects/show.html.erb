@@ -32,7 +32,6 @@
         <li><span class="key">Min</span>: <%= @min %></li>
         <li><span class="key">Eps</span>: <%= @eps %></li>
         <li><span class="key">Talk</span>: <a href="http://talk.<%= Milkman::Application.config.project["url"]%>/#/subjects/<%= @s.zooniverse_id %>" target="talk"><%= @s.zooniverse_id %></a></li>
-        <li><span class="key">BHL</span>: <a href="http://biodiversitylibrary.org/page/<%= @s.metadata['page_id'] %>" target="bhl"><%= @s.metadata['page_id'] %></a></li>
         <span class="stretch"></span></ul>
 </div>
 <div id="maps">
@@ -92,12 +91,7 @@
         <% end %>
         <% end %>
       </table>
-      <p>
-        <b>No illustrations:</b> <%= @s.metadata['no_illustrations_count']%><br>
-        <b>Has illustrations:</b> <%= @s.metadata['has_illustrations_count']%><br>
-        <b>Skipped:</b> <%= @s.metadata['skip_count']%>
-      </p>
-      <h4>Page keywords</h4>
+      <h4>Page transcription</h4>
       <p>
         <% @keywords.each do |text,count| %>
           <i><%= text.empty? ? 'blank' : text %></i> (<%= count %>)

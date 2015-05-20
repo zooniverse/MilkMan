@@ -111,48 +111,100 @@
 #   "tutorial_zoo_id" => "AMW0000v75"
 # }
 
+# Milkman::Application.config.project = {
+#   "name" => "Illustrated Milkman",
+#   "project" => "Science Gossip",
+#   "url" => "sciencegossip.org",
+#   "slug" => "illustratedlife",
+#   "type_key" => "value",
+#   "image" => { "width"=>1000.0, "height"=>563.0 },
+#   "object_types" => {
+#     "drawing" => {
+#       "hex" => "#330000",
+#       "label" => "Drawing",
+#       "data_keys" => ["details"]
+#     },
+#     "chart" => {
+#       "hex" => "#99ff00",
+#       "label" => "Chart",
+#       "data_keys" => ["details"]
+#     },
+#     "photograph" => {
+#       "hex" => "#ffff00",
+#       "label" => "Photograph",
+#       "data_keys" => ["details"]
+#     },
+#     "map" => {
+#       "hex" => "#ffff00",
+#       "label" => "Map",
+#       "data_keys" => ["details"]
+#     },
+#     "species" => {
+#       "hex" => "#ff0000",
+#       "label" => "Species",
+#       "data_keys" => ["subject"]
+#     },
+#     "inscription" => {
+#       "hex" => "#00ff00",
+#       "label" => "Inscription",
+#       "data_keys" => ["inscription"]
+#     },
+#     "contributor" => {
+#       "hex" => "#0000ff",
+#       "label" => "Contributor",
+#       "data_keys" => ["name", "role"]
+#     }
+#   },
+#   "dbscan" => {
+#     "eps" => 150,
+#     "min" => 2,
+#     "params" => {
+#       "x" => 1,
+#       "y" => 1,
+#       "left" => 1,
+#       "top" => 1,
+#       "width" => 1,
+#       "height" => 1,
+#       "frame" => 0
+#     },
+#     "param_labels" => {
+#       "x" => "X (px)",
+#       "y" => "Y (px)",
+#       "left" => "X (px)",
+#       "top" => "Y (px)",
+#       "width" => "Width",
+#       "height" => "Height"
+#     }
+#   },
+#   "styles" => { "action" => "#30C4FF", "action_hover" => "#8AD7FF", "accent" => "#A6D3FF" },
+#   "min_random" => 15,
+#   "example_zoo_id" => "APZ00003h1",
+#   "tutorial_zoo_id" => "AMW0000v75"
+# }
 Milkman::Application.config.project = {
-	"name" => "Illustrated Milkman",
-	"project" => "Science Gossip",
-	"url" => "sciencegossip.org",
-	"slug" => "illustratedlife",
+	"name" => "Orchid Milkman",
+	"project" => "Orchid Observers",
+	"url" => "orchidobservers.org",
+	"slug" => "orchid",
 	"type_key" => "value",
 	"image" => { "width"=>1000.0, "height"=>563.0 },
 	"object_types" => {
-    "drawing" => {
+    "flowering" => {
 			"hex" => "#330000",
-			"label" => "Drawing",
-      "data_keys" => ["details"]
+			"label" => "Flowering Stage",
+      "data_keys" => ["flowering"]
 		},
-		"chart" => {
+		"insects" => {
 			"hex" => "#99ff00",
-			"label" => "Chart",
-      "data_keys" => ["details"]
+			"label" => "Insects"
 		},
-		"photograph" => {
+		"barcode" => {
 			"hex" => "#ffff00",
-			"label" => "Photograph",
-      "data_keys" => ["details"]
+			"label" => "Barcode"
 		},
-		"map" => {
+		"specimen-label" => {
 			"hex" => "#ffff00",
-			"label" => "Map",
-      "data_keys" => ["details"]
-		},
-    "species" => {
-			"hex" => "#ff0000",
-			"label" => "Species",
-      "data_keys" => ["subject"]
-		},
-		"inscription" => {
-			"hex" => "#00ff00",
-			"label" => "Inscription",
-      "data_keys" => ["inscription"]
-		},
-		"contributor" => {
-			"hex" => "#0000ff",
-			"label" => "Contributor",
-      "data_keys" => ["name", "role"]
+			"label" => "Specimen Label"
 		}
 	},
 	"dbscan" => {

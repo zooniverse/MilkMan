@@ -58,7 +58,7 @@ class Subject
 
   def annotations
     # type_key = Milkman::Application.config.project["type_key"]
-    task_keys = ["illustration", "parts", "details"]
+    task_keys = ["species","flowering", "insects", "barcode","verify","vc"]
     unless self.is_tutorial? #Exclude tutorial
       list = self.classifications.map{|c| c.annotations }.flatten.select{|i| task_keys.include?(i["key"]) && i["value"].is_a?(Hash) }.map{|a| a["value"].map{|k,v| v}}.flatten
     else
@@ -100,6 +100,7 @@ class Subject
     raw_scan = []
     labels = []
     label_keys = Milkman::Application.config.project["object_types"][o]['data_keys']
+    label_keys ||= []
     objects = self.annotations_by_type(o)
     objects.each do |i|
 
