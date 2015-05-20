@@ -16,7 +16,7 @@ class WelcomeController < ApplicationController
 
     # Load 9 controversial subjects
     @subject_ids = []
-    subs = Subject.where(:classification_count.gt => 1)
+    subs = Subject.where(:classification_count.gt => 2)
     @subject_count = subs.size
     subs.limit(9).skip(rand(@subject_count-1)).sort(:classification_count.desc).each{|sr| @subject_ids << sr.zooniverse_id }
     @subject_ids = @subject_ids.uniq
