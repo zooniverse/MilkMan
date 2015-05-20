@@ -99,15 +99,12 @@
   <button id="searchButton" type="submit">Go</button>
   <button id="randomButton" type="submit">Random Image</button>
 </div>
-
+<p><small>Includes <%= number_with_delimiter(Classification.size) %> classifications up to <%= Classification.most_recent.created_at.to_formatted_s(:long_ordinal) %></small></p>
 <%= yield %>
 
 <div id="footer">
 <h3>Milkman delivers data for the Zooniverse's <a href="http://www.<%= Milkman::Application.config.project["url"] %>"><%= Milkman::Application.config.project["project"] %></a> site</h3>
-  <small>
-  Includes <%= number_with_delimiter(Classification.size) %> classifications up to <%= Classification.most_recent.created_at.to_formatted_s(:long_ordinal) %>
-  <br/>
-  Milkman is open source and <a href="https://github.com/eatyourgreens/MilkMan/" target="_blank">on GitHub</a> &middot; Email jim@zooniverse.org</small>
+  <small>Milkman is open source and <a href="https://github.com/eatyourgreens/MilkMan/" target="_blank">on GitHub</a> &middot; Email jim@zooniverse.org</small>
 </div>
 
 <script>
