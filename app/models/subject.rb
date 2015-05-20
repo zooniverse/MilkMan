@@ -60,10 +60,14 @@ class Subject
     # type_key = Milkman::Application.config.project["type_key"]
     task_keys = ["species","flowering", "insects", "barcode","verify","vc"]
     unless self.is_tutorial? #Exclude tutorial
-      list = self.classifications.map{|c| c.annotations }.flatten.select{|i| task_keys.include?(i["key"]) && i["value"].is_a?(Hash) }.map{|a| a["value"].map{|k,v| v}}.flatten
+      list = self.classifications.map{|c| c.annotations }.flatten.select{|i| task_keys.include?(i["key"]) }
     else
       return nil
     end
+  end
+  
+  def drawing_annotations
+    self.annotations.select{|i| i['value'].is_a?(Hash) }.map{|a| a["value"].map{|k,v| v}}.flatten
   end
 
   def save_scan(data, eps, min, type="dbscan")
@@ -89,7 +93,7 @@ class Subject
   def annotations_by_type(o="adult")
     type_key = Milkman::Application.config.project["type_key"]
     begin
-      return self.annotations.select{|a| a[type_key]==o if !a.blank?}
+      return self.drawing_annotations.select{|a| a[type_key]==o if !a.blank?}
     rescue
       return []
     end

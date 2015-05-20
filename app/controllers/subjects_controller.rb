@@ -22,7 +22,6 @@ class SubjectsController < ApplicationController
     @results = @s.cache_scan_result(@eps,@min)
     
     @results.each do |k,v|
-      puts v
       v['reduced'].each do |mark|
         case k
         when 'flowering'
@@ -53,13 +52,20 @@ class SubjectsController < ApplicationController
       
       votes = {}
       @s.annotations.each do |a|
-        puts a
-        if a.is_a?(String)
-          keywords = a.split(/[;,]\s*/)
-          keywords.each do |k|
-            votes[k] ||= 0
-            votes[k] += 1
+        if a['value'].is_a?(Hash)
+          a['value'].each do |k,v|
+            if v.is_a?(String)
+              votes[k] ||= {}
+              votes[k][v] ||= 0
+              votes[k][v] += 1
+            end
           end
+        else
+          k = a['key']
+          v = a['value']
+          votes[k] ||= {}
+          votes[k][v] ||= 0
+          votes[k][v] += 1
         end
       end
       @keywords = votes
