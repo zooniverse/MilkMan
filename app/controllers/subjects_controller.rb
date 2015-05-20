@@ -60,7 +60,7 @@ class SubjectsController < ApplicationController
               votes[k][v] += 1
             end
           end
-        else
+        elsif a['value'].is_a?(String)
           k = a['key']
           v = a['value']
           votes[k] ||= {}
