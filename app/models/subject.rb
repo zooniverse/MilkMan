@@ -70,10 +70,10 @@ class Subject
     # orchids records the frame number as an annotation on each classification
     annotations = []
     self.classifications.each do |c|
-      frame = c.annotations.find{|i| i.has_key? 'image_index'}['image_index'].to_i || 0
+      frame = c.annotations.find{|i| i.has_key? 'image_index'} || {'image_index' => 0}
       c.annotations.select{|i| i['value'].is_a?(Hash) }.each do |a|
         a['value'].values.each do |v|
-          v['frame'] = frame if v.has_key? 'frame'
+          v['frame'] = frame['image_index'] if v.has_key? 'frame'
         end
         annotations << a
       end
