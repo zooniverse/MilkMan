@@ -71,9 +71,11 @@ class Subject
     annotations = []
     self.classifications.each do |c|
       frame = c.annotations.find{|i| i.has_key? 'image_index'} || {'image_index' => 0}
-      c.annotations.select{|i| i['value'].is_a?(Hash) }.each do |a|
-        a['value'].values.each do |v|
-          v['frame'] = frame['image_index'] if v.has_key? 'frame'
+      c.annotations.each do |a|
+        if a['value'].is_a?(Hash)
+          a['value'].values.each do |v|
+            v['frame'] = frame['image_index'] if v.is_a?(Hash) and v.has_key?'frame'
+          end
         end
         annotations << a
       end
