@@ -190,7 +190,7 @@ Milkman::Application.config.project = {
 	"image" => { "width"=>1000.0, "height"=>563.0 },
 	"object_types" => {
     "flowering" => {
-			"hex" => "#006600",
+			"hex" => "#ff6600",
 			"label" => "Flowering Stage",
       "data_keys" => ["flowering"]
 		},
@@ -225,7 +225,8 @@ Milkman::Application.config.project = {
 			"left" => "X (px)",
 			"top" => "Y (px)",
       "width" => "Width",
-      "height" => "Height"
+      "height" => "Height",
+      "frame" => "Frame"
 		}
 	},
 	"styles" => { "action" => "#30C4FF", "action_hover" => "#8AD7FF", "accent" => "#A6D3FF" },
