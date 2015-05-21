@@ -99,8 +99,11 @@
       </table>
       <h4>Page transcription</h4>
       <p>
-        <% @keywords.each do |text,count| %>
-          <i><%= text.empty? ? 'blank' : text %></i> (<%= count %>)
+        <% @keywords.each do |key, votes|%>
+        <i><%= key %></i>
+          <% votes.each do |text,count| %>
+            <%= text.empty? ? 'blank' : text %> (<%= count %>)
+          <% end %>
         <% end %>
       </p>
       <div style="clear:both;"></div>
