@@ -60,10 +60,25 @@ class Subject
     # type_key = Milkman::Application.config.project["type_key"]
     task_keys = ["species","flowering", "insects", "barcode","verify","vc"]
     unless self.is_tutorial? #Exclude tutorial
-      list = self.classifications.map{|c| c.annotations }.flatten.select{|i| task_keys.include?(i["key"]) }
+      list = self.filter_annotations.flatten.select{|i| task_keys.include?(i["key"]) }
     else
       return nil
     end
+  end
+  
+  def filter_annotations
+    # orchids records the frame number as an annotation on each classification
+    annotations = []
+    self.classifications.each do |c|
+      frame = c.annotations.find{|i| i.has_key? 'image_index'}['image_index'].to_i || 0
+      c.annotations.select{|i| i['value'].is_a?(Hash) }.each do |a|
+        a['value'].values.each do |v|
+          v['frame'] = frame if v.has_key? 'frame'
+        end
+        annotations << a
+      end
+    end
+    annotations
   end
   
   def drawing_annotations
