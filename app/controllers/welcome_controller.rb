@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
     @pagetitle = Milkman::Application.config.project["name"]
     @eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
     @min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
-    has_illustrations = params[:has_illustrations] || 10
+    has_illustrations = params[:has_illustrations] || 5
     @tutorial = Milkman::Application.config.project["tutorial_zoo_id"]
     @counts = Subject.counts
 
