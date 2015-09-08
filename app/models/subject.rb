@@ -36,6 +36,10 @@ class Subject
   
   STATUSES = ['active', 'inactive', 'complete', 'paused', 'disabled']
   
+  def activated?
+    self.respond_to?('activated_at') and !self.activated_at.nil?
+  end
+  
   def is_tutorial?
     return self.respond_to?('tutorial') ? TRUE : FALSE
   end
