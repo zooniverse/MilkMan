@@ -69,6 +69,26 @@ class Subject
       return nil
     end
   end
+  
+  def keywords
+    votes = {}
+    self.annotations.each do |a|
+      if a.is_a?(String)
+        votes = self.process_keywords a, votes
+      end
+    end
+    
+    votes
+  end
+  
+  def process_keywords(annotation, votes)
+    keywords = annotation.split(/[;,]\s*/)
+    keywords.each do |k|
+      votes[k] ||= 0
+      votes[k] += 1
+    end
+    votes
+  end
 
   def save_scan(data, eps, min, type="dbscan")
     s = ScanResult.create(
@@ -304,6 +324,63 @@ class Subject
     else
 	    return false
   	end
+  end
+  
+  def gather_votes(fields, set, key)
+    votes = {}
+    set.each do |t|
+      fields.each do |f|
+        votes[f] ||= {}
+        if t[key] == nil
+          label = 'blank'
+        else
+          label = t[key][f]
+        end
+        # label = 'none' if label == ''
+        votes[ f ][ label ] ||= 0
+        votes[ f ][ label ] += 1
+      end
+    end
+    votes
+  end
+  
+  def process_labels(scan_results)
+    scan_results.each do |k,v|
+      puts v
+      v['reduced'].each do |mark|
+        case k
+        when 'drawing', 'chart', 'map', 'photograph'
+          mark['labels'] = [self.mark_keywords(mark)]
+        when 'species'
+          mark['labels'] = [self.gather_votes(['common', 'scientific'], mark['labels'], 'subject')]
+        when 'contributor'
+          name_votes = self.gather_votes(['name'], mark['labels'], 'name')
+          role_votes = self.gather_votes(['role'], mark['labels'], 'role')
+          mark['labels'] = [name_votes, role_votes]
+        when 'inscription'
+          mark['labels'] = [self.gather_votes(['text'], mark['labels'], 'inscription')]
+        end
+      end
+    end
+    scan_results
+  end
+  
+  def mark_votes(votes, details)
+    if details == nil
+      keywords = []
+    else
+      votes = self.process_keywords details['keywords'], votes
+    end
+    
+    votes
+  end
+  
+  def mark_keywords(mark)
+    votes = {}
+    mark['labels'].each do |label|
+      votes = self.mark_votes votes, label['details']
+    end
+    {'keywords' => votes}
   end
 
 end
