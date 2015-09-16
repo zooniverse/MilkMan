@@ -1,0 +1,36 @@
+<p><%= @g.metadata['title'] %></p>
+<p><%= @g.stats['complete'] %>/<%= @g.stats['total'] %> pages complete.</p>
+<p>Status: <%= @g.state %></p>
+
+<table>
+  <theader>
+    <th>Page</th>
+    <th>Type</th>
+    <th>Value</th>
+  </theader>
+  <tbody>
+    <% @results.each do |zoo_id, result| %>
+      <tr>
+        <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+        <td>Page keywords</td>
+        <td><%= result[:keywords].keys.to_s %></td>
+      </tr>
+      <% result[:reduced].each do |type,res| %>
+        <tr>
+          <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+          <td><%= type %></td>
+          <td>
+          <% res.each do |a| %>
+            <% a['labels'].each do |label| %>
+              <% label.each do |k,v| %>
+                <b><%= k %></b>
+                <%= v.keys.to_s %>
+              <% end %>
+            <% end %>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

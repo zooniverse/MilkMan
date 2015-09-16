@@ -6,6 +6,7 @@ Milkman::Application.routes.draw do
   get "subjects/index"
 
   get 'groups' => 'groups#index'
+  get 'groups/:zoo_id/export' => 'groups#export'
   get 'groups/:zoo_id(/:page)' => 'groups#show', defaults: { page: 1 }
   get 'subjects/:zoo_id' => 'subjects#show'
   get 'page/:page_id' => 'subjects#page'

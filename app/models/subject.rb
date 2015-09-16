@@ -346,7 +346,6 @@ class Subject
   
   def process_labels(scan_results)
     scan_results.each do |k,v|
-      puts v
       v['reduced'].each do |mark|
         case k
         when 'drawing', 'chart', 'map', 'photograph'
