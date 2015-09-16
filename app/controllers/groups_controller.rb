@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
     subject_ids = []
     scan_results = {}
     
-    subjects = Subject.fields(:zooniverse_id).sort('metadata.page_id').where('group.zooniverse_id' => params[:zoo_id], 'metadata.has_illustrations_count' => {:$gte => 5})
+    subjects = Subject.fields(:zooniverse_id).sort('metadata.page_id').where('group.zooniverse_id' => params[:zoo_id], 'metadata.has_illustrations_count' => {:$gte => 5}).limit(100)
     subjects.each do |s|
       subject_ids << s.zooniverse_id
     end
