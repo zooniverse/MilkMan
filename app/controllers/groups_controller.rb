@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
     subject_ids = []
     scan_results = {}
     
-    subjects = Subject.fields(:zooniverse_id).sort('metadata.page_id').where('group.zooniverse_id' => params[:zoo_id], 'metadata.has_illustrations_count' => {:$gte => 5}).limit(100)
+    subjects = Subject.fields(:zooniverse_id, :metadata, :classification_count).sort('metadata.page_id').where('group.zooniverse_id' => params[:zoo_id], 'metadata.has_illustrations_count' => {:$gte => 5}).limit(100)
     subjects.each do |s|
       subject_ids << s.zooniverse_id
     end
@@ -42,7 +42,7 @@ class GroupsController < ApplicationController
       end
       # keywords = {}
       keywords = s.keywords()
-      @results[s.zooniverse_id] = {:keywords => keywords, :reduced => reduced}
+      @results[s.zooniverse_id] = {:classification_count => s.classification_count, :page_id => s.metadata['page_id'], :keywords => keywords, :reduced => reduced}
     end
   end
 

@@ -5,21 +5,31 @@
 <table>
   <theader>
     <th>Page</th>
+    <th>Classification count</th>
+    <th>BHL ID</th>
     <th>Type</th>
+    <th>Coords</th>
     <th>Value</th>
   </theader>
   <tbody>
     <% @results.each do |zoo_id, result| %>
       <tr>
         <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+        <td><%= result[:classification_count] %> </td>
+        <td><%= result[:page_id] %> </td>
         <td>Page keywords</td>
+        <td>[]</td>
         <td><%= result[:keywords].keys.to_s %></td>
       </tr>
       <% result[:reduced].each do |type,res| %>
         <% res.each do |a| %>
+        <% coords = [ a['x'].to_i, a['y'].to_i, a['left'].to_i, a['top'].to_i, a['width'].to_i, a['height'].to_i ]%>
           <tr>
             <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+            <td><%= result[:classification_count] %> </td>
+            <td><%= result[:page_id] %> </td>
             <td><%= type %></td>
+            <td><%= coords.to_s %></td>
             <td>
             <% a['labels'].each do |label| %>
               <% label.each do |k,v| %>
