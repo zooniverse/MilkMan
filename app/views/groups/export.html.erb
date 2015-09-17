@@ -16,20 +16,20 @@
         <td><%= result[:keywords].keys.to_s %></td>
       </tr>
       <% result[:reduced].each do |type,res| %>
-        <tr>
-          <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
-          <td><%= type %></td>
-          <td>
-          <% res.each do |a| %>
+        <% res.each do |a| %>
+          <tr>
+            <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+            <td><%= type %></td>
+            <td>
             <% a['labels'].each do |label| %>
               <% label.each do |k,v| %>
                 <b><%= k %></b>
                 <%= v.keys.to_s %>
               <% end %>
             <% end %>
-          <% end %>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>
