@@ -34,7 +34,7 @@ class GroupsController < ApplicationController
     end
     
     subjects.each do |s|
-      scan_result = scan_results[s.zooniverse_id]
+      scan_result = scan_results[s.zooniverse_id] || s.cache_scan_result(eps, min)
       result = s.process_labels scan_result
       reduced = {}
       result.each do |type, res|
