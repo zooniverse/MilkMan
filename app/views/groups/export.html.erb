@@ -19,7 +19,7 @@
         <td><%= result[:page_id] %> </td>
         <td>Page keywords</td>
         <td>[]</td>
-        <td><%= result[:keywords].keys.to_s %></td>
+        <td><%= result[:keywords].to_s %></td>
       </tr>
       <% result[:reduced].each do |type,res| %>
         <% res.each do |a| %>
