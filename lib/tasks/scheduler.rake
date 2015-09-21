@@ -35,11 +35,28 @@ task :export_results => :environment do
       # keywords = {}
       keywords = s.keywords()
       
+      marks = []
+      reduced.each do |type, res|
+        mark = {:type => type}
+        res.each do |a|
+          mark[:coords] = [ a['x'].to_i, a['y'].to_i, a['left'].to_i, a['top'].to_i, a['width'].to_i, a['height'].to_i ]
+          value = {}
+          a['labels'].each do |label|
+            label.each do |k,v|
+              value[k] = v.keys
+            end
+          end
+          mark[:value] = value
+        end
+        marks << mark
+      end
+      
       result = {
         :subject_id => s.zooniverse_id, 
         :group_id => g.zooniverse_id, 
         :classification_count => s.classification_count, 
-        :page_id => s.metadata['page_id'], 
+        :page_id => s.metadata['page_id'],
+        :reduced => marks, 
         :keywords => keywords.keys
       }
       Result.new( result ).save()

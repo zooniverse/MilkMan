@@ -12,34 +12,29 @@
     <th>Value</th>
   </theader>
   <tbody>
-    <% @results.each do |zoo_id, result| %>
+    <% @results.each do |result| %>
       <tr>
-        <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+        <td><a href="/subjects/<%= result[:subject_id] %>"><%= result[:subject_id] %></a></td>
         <td><%= result[:classification_count] %> </td>
         <td><%= result[:page_id] %> </td>
         <td>Page keywords</td>
         <td>[]</td>
         <td><%= result[:keywords].to_s %></td>
       </tr>
-      <% result[:reduced].each do |type,res| %>
-        <% res.each do |a| %>
-        <% coords = [ a['x'].to_i, a['y'].to_i, a['left'].to_i, a['top'].to_i, a['width'].to_i, a['height'].to_i ]%>
-          <tr>
-            <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
-            <td><%= result[:classification_count] %> </td>
-            <td><%= result[:page_id] %> </td>
-            <td><%= type %></td>
-            <td><%= coords.to_s %></td>
-            <td>
-            <% a['labels'].each do |label| %>
-              <% label.each do |k,v| %>
-                <b><%= k %></b>
-                <%= v.keys.to_s %>
-              <% end %>
+      <% result[:reduced].each do |mark| %>
+        <tr>
+          <td><a href="/subjects/<%= result[:subject_id] %>"><%= result[:subject_id] %></a></td>
+          <td><%= result[:classification_count] %> </td>
+          <td><%= result[:page_id] %> </td>
+          <td><%= mark["type"] %></td>
+          <td><%= mark["coords"].to_s %></td>
+          <td>
+            <% mark["value"].each do |k,v| %>
+              <b><%= k %></b>
+              <%= v %>
             <% end %>
-            </td>
-          </tr>
-        <% end %>
+          </td>
+        </tr>
       <% end %>
     <% end %>
   </tbody>

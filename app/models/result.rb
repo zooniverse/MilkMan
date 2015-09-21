@@ -9,6 +9,7 @@ class Result
 
 
   key :classification_count, Integer
+  key :reduced, Array
   key :keywords, Array
   
   key :page_id, String
