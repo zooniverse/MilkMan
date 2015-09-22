@@ -9,6 +9,7 @@
           Active: <%= group.stats['active'] %><br>
           Inactive: <%= group.stats['inactive'] %><br>
           Paused: <%= group.stats['paused'] %></p>
+        <p>Tag data: <a href="/groups/<%= group.zooniverse_id %>/export">HTML</a> <a href="/groups/<%= group.zooniverse_id %>/csv">CSV</a></p>
       </li>
     <% end %>
     </ol>
