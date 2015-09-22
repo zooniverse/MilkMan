@@ -63,7 +63,7 @@ class GroupsController < ApplicationController
   end
   
   def gather_results(zoo_id)
-    Result.all(:group_id => zoo_id)
+    Result.sort(:page_id).all(:group_id => zoo_id)
   end
 
 end
