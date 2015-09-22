@@ -37,8 +37,8 @@ task :export_results => :environment do
       
       marks = []
       reduced.each do |type, res|
-        mark = {:type => type}
         res.each do |a|
+          mark = {:type => type}
           mark[:coords] = [ a['x'].to_i, a['y'].to_i, a['left'].to_i, a['top'].to_i, a['width'].to_i, a['height'].to_i ]
           value = {}
           a['labels'].each do |label|
@@ -47,8 +47,8 @@ task :export_results => :environment do
             end
           end
           mark[:value] = value
+          marks << mark
         end
-        marks << mark
       end
       
       result = {
