@@ -15,5 +15,20 @@ class GroupsController < ApplicationController
     @last_page = [@first_page + 19, num_pages].min
   end
 
+  def export
+    @g ||= Group.find_by_zooniverse_id(params[:zoo_id])
+    @results ||= {}
+    Subject.fields(:zooniverse_id, :metadata, :location).sort('metadata.occurrence_id').limit(10).find_each('group.zooniverse_id' => params[:zoo_id], :classification_count => {:$gte => 5}) do |s|
+      eps = params[:eps] || Milkman::Application.config.project["dbscan"]["eps"]
+      min = params[:min] || Milkman::Application.config.project["dbscan"]["min"]
+      result = s.process_labels(s.cache_scan_result(eps,min))
+      reduced = {}
+      result.each do |type, res|
+        reduced[type] = res['reduced'] unless res['reduced'] == []
+      end
+      @metadata_keys ||= s['metadata'].keys
+      @results[s.zooniverse_id] = {:keywords => s.keywords(), :reduced => reduced, :metadata => s['metadata']}
+    end
+  end
 
 end

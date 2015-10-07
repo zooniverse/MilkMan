@@ -1,0 +1,51 @@
+<p><%= @g.metadata['title'] %></p>
+<p><%= @g.stats['complete'] %>/<%= @g.stats['total'] %> pages complete.</p>
+<p>Status: <%= @g.state %></p>
+
+<table>
+  <theader>
+    <th>Photo</th>
+    <% @metadata_keys.each do |k| %>
+      <th><%= k %></th>
+    <% end %>
+    <th>Type</th>
+    <th>Value</th>
+    <th>Vote</th>
+  </theader>
+  <tbody>
+    <% @results.each do |zoo_id, result| %>
+      <% result[:keywords].each do |type, votes| %>
+        <% votes.each do |choice, vote| %>
+        <tr>
+          <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+          <% @metadata_keys.each do |k| %>
+            <td><%= result[:metadata][k] %></td>
+          <% end %>
+          <td><%= type %></td>
+          <td><%= choice %></td>
+          <td><%= vote %></td>
+        </tr>
+        <% end %>
+      <% end%>
+      <% result[:reduced].each do |type,res| %>
+          <% res.each do |a| %>
+            <% a['labels'].each do |label| %>
+              <% label.each do |k,v| %>
+                <% v.each do |choice, vote| %>
+                <tr>
+                  <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+                  <% @metadata_keys.each do |k| %>
+                    <td><%= result[:metadata][k] %></td>
+                  <% end %>
+                  <td><%= k %></td>
+                  <td><%= choice %></td>
+                  <td><%= vote %></td>
+                </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
