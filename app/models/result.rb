@@ -9,6 +9,7 @@ class Result
 
 
   key :classification_count, Integer
+  key :scale, Float
   key :reduced, Array
   key :keywords, Array
   

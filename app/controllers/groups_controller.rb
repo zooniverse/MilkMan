@@ -30,6 +30,7 @@ class GroupsController < ApplicationController
       'Zooniverse ID',
       'Classification count',
       'Page ID',
+      'Image scale',
       'Type',
       'Coords',
       'Value'
@@ -42,6 +43,7 @@ class GroupsController < ApplicationController
           result[:subject_id],
           result[:classification_count],
           result[:page_id],
+          result[:scale],
           'Page keywords',
           [],
           result[:keywords]
@@ -51,6 +53,7 @@ class GroupsController < ApplicationController
             result[:subject_id],
             result[:classification_count],
             result[:page_id],
+            result[:scale],
             mark["type"],
             mark["coords"],
             mark["value"]

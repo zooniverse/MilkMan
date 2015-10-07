@@ -26,6 +26,10 @@ task :export_results => :environment do
     subjects.each do |s|
       sub_counter += 1
       puts "processing #{sub_counter} #{s.zooniverse_id}"
+      
+      max_size = s['metadata']['original_size'].values.max
+      scale = 1400.to_f / max_size
+      
       scan_result = scan_results[s.zooniverse_id] || s.cache_scan_result(eps, min)
       result = s.process_labels scan_result
       reduced = {}
@@ -57,7 +61,8 @@ task :export_results => :environment do
         :classification_count => s.classification_count, 
         :page_id => s.metadata['page_id'],
         :reduced => marks, 
-        :keywords => keywords.keys
+        :keywords => keywords.keys,
+        :scale => scale
       }
       Result.new( result ).save()
       
