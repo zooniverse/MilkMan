@@ -13,19 +13,17 @@
     <th>Vote</th>
   </theader>
   <tbody>
-    <% @results.each do |zoo_id, result| %>
+    <% @results.each do |result| %>
       <% result[:keywords].each do |type, votes| %>
-        <% max_vote = votes.values.max %>
-        <% votes = votes.select { |k, vote| vote == max_vote } %>
-        <% votes.each do |choice, vote| %>
+        <% votes.each do |vote| %>
         <tr>
-          <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+          <td><a href="/subjects/<%= result[:subject_id] %>"><%= result[:subject_id] %></a></td>
           <% @metadata_keys.each do |k| %>
             <td><%= result[:metadata][k] %></td>
           <% end %>
           <td><%= type %></td>
-          <td><%= choice %></td>
-          <td><%= vote %></td>
+          <td><%= vote[:choice] %></td>
+          <td><%= vote[:vote] %></td>
         </tr>
         <% end %>
       <% end%>
@@ -37,7 +35,7 @@
                 <% v = v.select { |k, vote| vote == max_vote } %>
                 <% v.each do |choice, vote| %>
                 <tr>
-                  <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
+                  <td><a href="/subjects/<%= result[:subject_id] %>"><%= result[:subject_id] %></a></td>
                   <% @metadata_keys.each do |k| %>
                     <td><%= result[:metadata][k] %></td>
                   <% end %>
