@@ -15,6 +15,8 @@
   <tbody>
     <% @results.each do |zoo_id, result| %>
       <% result[:keywords].each do |type, votes| %>
+        <% max_vote = votes.values.max %>
+        <% votes = votes.select { |k, vote| vote == max_vote } %>
         <% votes.each do |choice, vote| %>
         <tr>
           <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
@@ -31,6 +33,8 @@
           <% res.each do |a| %>
             <% a['labels'].each do |label| %>
               <% label.each do |k,v| %>
+                <% max_vote = v.values.max %>
+                <% v = v.select { |k, vote| vote == max_vote } %>
                 <% v.each do |choice, vote| %>
                 <tr>
                   <td><a href="/subjects/<%= zoo_id %>"><%= zoo_id %></a></td>
