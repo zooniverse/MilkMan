@@ -7,6 +7,7 @@ Milkman::Application.routes.draw do
 
   match 'groups' => 'groups#index'
   match 'groups/:zoo_id/export' => 'groups#export'
+  match 'groups/:zoo_id/csv' => 'groups#csv'
   match 'groups/:zoo_id(/:page)' => 'groups#show', defaults: { page: 1 }
   match 'subjects/:zoo_id' => 'subjects#show'
   match 'page/:page_id' => 'subjects#page'

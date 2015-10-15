@@ -20,5 +20,64 @@ class GroupsController < ApplicationController
     @results = Result.sort('metadata.occurrence_id').all(:group_id => params[:zoo_id])
     @metadata_keys = @results.first()[:metadata].keys
   end
+  
+  def csv
+
+    results = Result.sort('metadata.occurrence_id').all(:group_id => params[:zoo_id])
+    metadata_keys = results.first()[:metadata].keys
+
+    column_names = ['Zooniverse ID', 'Classification count']
+    column_names.concat metadata_keys
+    column_names.concat ['Type', 'Value', 'Vote']
+
+    csv = CSV.generate do |csv|
+      csv << column_names
+      results.each do |result|
+        result[:keywords].each do |type, votes|
+          votes.each do |vote|
+            row = [
+              result[:subject_id],
+              result[:classification_count]
+            ]
+            metadata_keys.each do |k|
+              row << result[:metadata][k]
+            end
+            row.concat [
+              type,
+              vote[:choice],
+              vote[:vote]
+            ]
+            csv << row
+          end
+        end
+        result[:reduced].each do |type,res|
+          res.each do |a|
+            a['labels'].each do |label|
+              label.each do |k,v|
+                max_vote = v.values.max
+                v = v.select { |k, vote| vote == max_vote }
+                v.each do |choice, vote|
+                  row = [
+                    result[:subject_id],
+                    result[:classification_count]
+                  ]
+                  metadata_keys.each do |k|
+                    row << result[:metadata][k]
+                  end
+                  row.concat [
+                    k,
+                    choice,
+                    vote
+                  ]
+                  csv << row
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    send_data csv, :filename => "#{params[:zoo_id]}.csv"
+  end
 
 end
