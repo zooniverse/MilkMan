@@ -27,26 +27,18 @@
         </tr>
         <% end %>
       <% end%>
-      <% result[:reduced].each do |type,res| %>
-          <% res.each do |a| %>
-            <% a['labels'].each do |label| %>
-              <% label.each do |k,v| %>
-                <% max_vote = v.values.max %>
-                <% v = v.select { |k, vote| vote == max_vote } %>
-                <% v.each do |choice, vote| %>
-                <tr>
-                  <td><a href="/subjects/<%= result[:subject_id] %>"><%= result[:subject_id] %></a></td>
-                  <% @metadata_keys.each do |k| %>
-                    <td><%= result[:metadata][k] %></td>
-                  <% end %>
-                  <td><%= k %></td>
-                  <td><%= choice %></td>
-                  <td><%= vote %></td>
-                </tr>
-                <% end %>
-              <% end %>
+      <% result[:marks].each do |type, votes| %>
+        <% votes.each do |choice, vote| %>
+          <tr>
+            <td><a href="/subjects/<%= result[:subject_id] %>"><%= result[:subject_id] %></a></td>
+            <% @metadata_keys.each do |k| %>
+              <td><%= result[:metadata][k] %></td>
             <% end %>
-          <% end %>
+            <td><%= type %></td>
+            <td><%= choice %></td>
+            <td><%= vote %></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>

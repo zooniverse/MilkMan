@@ -19,6 +19,19 @@ class GroupsController < ApplicationController
     @g ||= Group.find_by_zooniverse_id(params[:zoo_id])
     @results = Result.sort('metadata.occurrence_id').all(:group_id => params[:zoo_id])
     @metadata_keys = @results.first()[:metadata].keys
+    @results.each do |result|
+      result[:marks] = {}
+      result[:reduced].each do |type, marks|
+        marks.each do |mark|
+          mark['labels'].each do |label|
+            label.each do |k, v|
+              max_vote = v.values.max
+              result[:marks][k] = v.select { |k, vote| vote == max_vote }
+            end
+          end
+        end
+      end
+    end
   end
   
   def csv
@@ -29,6 +42,20 @@ class GroupsController < ApplicationController
     column_names = ['Zooniverse ID', 'Classification count']
     column_names.concat metadata_keys
     column_names.concat ['Type', 'Value', 'Vote']
+    
+    results.each do |result|
+      result[:marks] = {}
+      result[:reduced].each do |type, marks|
+        marks.each do |mark|
+          mark['labels'].each do |label|
+            label.each do |k, v|
+              max_vote = v.values.max
+              result[:marks][k] = v.select { |k, vote| vote == max_vote }
+            end
+          end
+        end
+      end
+    end
 
     csv = CSV.generate do |csv|
       csv << column_names
@@ -50,29 +77,21 @@ class GroupsController < ApplicationController
             csv << row
           end
         end
-        result[:reduced].each do |type,res|
-          res.each do |a|
-            a['labels'].each do |label|
-              label.each do |k,v|
-                max_vote = v.values.max
-                v = v.select { |k, vote| vote == max_vote }
-                v.each do |choice, vote|
-                  row = [
-                    result[:subject_id],
-                    result[:classification_count]
-                  ]
-                  metadata_keys.each do |k|
-                    row << result[:metadata][k]
-                  end
-                  row.concat [
-                    k,
-                    choice,
-                    vote
-                  ]
-                  csv << row
-                end
-              end
+        result[:marks].each do |type,votes|
+          votes.each do |choice, vote|
+            row = [
+              result[:subject_id],
+              result[:classification_count]
+            ]
+            metadata_keys.each do |k|
+              row << result[:metadata][k]
             end
+            row.concat [
+              type,
+              choice,
+              vote
+            ]
+            csv << row
           end
         end
       end
