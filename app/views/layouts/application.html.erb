@@ -100,7 +100,7 @@
   <button id="searchButton" type="submit">Go</button>
   <button id="randomButton" type="submit">Random Image</button>
 </div>
-<p><small>Includes <%= number_with_delimiter(Classification.size) %> classifications up to <%= Classification.most_recent.created_at.to_formatted_s(:long_ordinal) %></small></p>
+<p>Includes <%= number_with_delimiter(Classification.size) %> classifications up to <%= Classification.most_recent.created_at.to_formatted_s(:long_ordinal) %></p>
 <%= yield %>
 
 <div id="footer">
