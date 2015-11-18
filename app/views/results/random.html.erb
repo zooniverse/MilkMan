@@ -1,0 +1,14 @@
+<h2>Illustrations</h2>
+<% @illustrations.each do |drawing|%>
+  <% viewbox = drawing['coords'][2..5].join ' ' %>
+  <% drawing['value'].each do |k,v|%>
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="<%= viewbox %>" width="<%= drawing['coords'][4] %>" height="<%= drawing['coords'][5] %>">
+      <image xlink:href="<%= @subject.image[0] %>" width="<%= @subject.width %>" height="<%= @subject.height %>"/>
+    </svg>
+    <h3><%= k %></h3>
+    <p><%= v.join ', ' %></p>
+  <% end %>
+<% end %>
+<h2>Page keywords</h2>
+<p><%= @keywords.join ', ' %></p>
+<p><a href="http://talk.<%= Milkman::Application.config.project["url"]%>/#/subjects/<%= @subject.zooniverse_id %>" target="talk">Talk about this <%= @illustrations[0]['type'] %></a></p>

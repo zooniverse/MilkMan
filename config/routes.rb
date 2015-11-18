@@ -16,6 +16,7 @@ Milkman::Application.routes.draw do
   get 'subjects/simbad/:zoo_id' => 'subjects#simbad'
   get 'subjects/raw/:zoo_id' => 'subjects#raw'
   get 'subjects(/:status)(/:page)' => 'subjects#index', defaults: {status: 'active', page: 1}
+  get 'random(/:type)' => 'results#random', defaults: {type: 'drawing'}
 
   get 'catalogues/dr2/bubbles' => 'catalogue_objects#bubbles'
 
