@@ -5,7 +5,9 @@ class ResultsController < ApplicationController
     results_count = results.size
     result = results.limit(1).skip(rand(results_count - 1)).first()
     @subject = Subject.where(:zooniverse_id => result.subject_id).first()
-    @illustrations = result.illustrations params[:type]
+    @illustrations = result.marks params[:type]
+    @species = result.marks 'species'
+    @contributors = result.marks 'contributor'
     @keywords = result.keywords
   end
 

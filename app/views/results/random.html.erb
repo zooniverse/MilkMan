@@ -9,6 +9,20 @@
     <p><%= v.join ', ' %></p>
   <% end %>
 <% end %>
+<h3>Species</h3>
+<% @species.each do |mark|%>
+  <% mark['value'].each do |k,v|%>
+    <h4><%= k %></h4>
+    <p><%= v.join ', ' %></p>
+  <% end %>
+<% end %>
+<h3>Contributors</h3>
+<% @contributors.each do |mark|%>
+  <% mark['value'].each do |k,v|%>
+    <h4><%= k %></h4>
+    <p><%= v.join ', ' %></p>
+  <% end %>
+<% end %>
 <h2>Page keywords</h2>
 <p><%= @keywords.join ', ' %></p>
 <p><a href="http://talk.<%= Milkman::Application.config.project["url"]%>/#/subjects/<%= @subject.zooniverse_id %>" target="talk">Talk about this <%= @illustrations[0]['type'] %></a></p>

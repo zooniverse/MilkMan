@@ -15,7 +15,7 @@ class Result
   
   key :page_id, String
   
-  def illustrations(type = 'drawing')
+  def marks(type = 'drawing')
     self.reduced.select{|mark| mark['type'] == type}
   end
   
