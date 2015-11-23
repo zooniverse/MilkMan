@@ -1,4 +1,5 @@
 <h2>Illustrations</h2>
+<p>Zooniverse ID: <a href="/subjects/<%= @subject.zooniverse_id %>"><%= @subject.zooniverse_id %></a></p>
 <% @illustrations.each do |drawing|%>
   <% viewbox = drawing['coords'][2..5].join ' ' %>
   <% drawing['value'].each do |k,v|%>
