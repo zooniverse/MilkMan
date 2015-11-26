@@ -2,7 +2,7 @@ desc "update results collection for completed groups"
 task :export_results => :environment do
   counter = 0
   
-  Group.find_each( :state => 'complete' ) do |g|
+  Group.find_each( :state.in => ['complete', 'active'] ) do |g|
     counter += 1
     puts "#{counter} #{g.zooniverse_id} #{g.name}"
   
