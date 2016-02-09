@@ -16,7 +16,7 @@
 	<%- Milkman::Application.config.project["object_types"].keys.each do |type| -%>
 		<%- @raw[type]["raw"].each_with_index do |d,i| -%>
 			<%- @obj = [d, @s.zooniverse_id, scale, @types[type]["hex"], i, "raw"] -%>
-	        <%= render partial: "#{type}", obj: @obj %>
+	        <%= render partial: "#{type.gsub('-', '_')}", obj: @obj %>
 		<%- end -%>
 	<%- end -%>
   <text fill="#ffffff" stroke="none" font="10px &quot;Arial&quot;" text-anchor="left" y="<%= (@s.height-15)*scale %>" x="<%= 10*scale %>" >Raw Drawings</text>

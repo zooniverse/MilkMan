@@ -44,11 +44,11 @@
         
         <% d["signal"].each do |a| %>
             <%- @obj = [a, @s.zooniverse_id, scale, "#ffffff", i, "signal"] -%>
-            <%= render partial: "#{type}", obj: @obj %>
+            <%= render partial: "#{type.gsub('-', '_')}", obj: @obj %>
         <% end %>
 
         <%- @obj = [d, @s.zooniverse_id, scale, @types[type]["hex"], i, "reduced"] -%>
-        <%= render partial: "#{type}", obj: @obj %>
+        <%= render partial: "#{type.gsub('-', '_')}", obj: @obj %>
 
       <% end %>
     <% end %>
