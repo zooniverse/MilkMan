@@ -86,7 +86,7 @@ class Subject
         rx = rot>90 ? i["ry"].to_f : i["rx"].to_f
         ry = rot>90 ? i["rx"].to_f : i["ry"].to_f
         output["raw"] << [i["center"][0].to_f, i["center"][1].to_f, rx, ry, (5.0/90.0)*(rot%90.0) ]
-      else 
+      else
         rot = 0
         rx = i["width"].to_f
         ry = i["height"].to_f
