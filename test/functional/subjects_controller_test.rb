@@ -7,7 +7,8 @@ class SubjectsControllerTest < ActionController::TestCase
   end
 
   test "should get show" do
-    get :show
+    Subject.create! created_at: Time.now, zooniverse_id: "1", "metadata" => {"size" => "100x100"}
+    get :show, zoo_id: "1"
     assert_response :success
   end
 

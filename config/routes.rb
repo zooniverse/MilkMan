@@ -5,13 +5,13 @@ Milkman::Application.routes.draw do
 
   get "subjects/index"
 
-  match 'subjects/:zoo_id' => 'subjects#show'
-  match 'coordinates' => 'subjects#coordinates'
-  match 'subjects/preview/:zoo_id' => 'subjects#preview'
-  match 'subjects/simbad/:zoo_id' => 'subjects#simbad'
-  match 'subjects/raw/:zoo_id' => 'subjects#raw'
+  get 'subjects/:zoo_id' => 'subjects#show'
+  get 'coordinates' => 'subjects#coordinates'
+  get 'subjects/preview/:zoo_id' => 'subjects#preview'
+  get 'subjects/simbad/:zoo_id' => 'subjects#simbad'
+  get 'subjects/raw/:zoo_id' => 'subjects#raw'
 
-  match 'catalogues/dr2/bubbles' => 'catalogue_objects#bubbles'
+  get 'catalogues/dr2/bubbles' => 'catalogue_objects#bubbles'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
