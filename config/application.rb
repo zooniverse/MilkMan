@@ -4,9 +4,10 @@ require File.expand_path('../boot', __FILE__)
 # require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
-require "active_resource/railtie"
 require "rails/test_unit/railtie"
 require 'sprockets/railtie'
+
+require 'yaml'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -61,6 +62,9 @@ module Milkman
         ScanResult.ensure_index [[:eps, 1]], :sparse => true
         ScanResult.ensure_index [[:min, 1]], :sparse => true
     end
+
+    config.assets.precompile += %w( bootstrap.css dc.css explore.css main.css mwp-styles.css subjects.css welcome.css )
+    config.assets.precompile += %w( bootstrap.min.js crossfilter.js d3.js dc.js explore.js jquery.1.9.1.min.js jquery.svg.min.js subjects.js welcome.js )
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]

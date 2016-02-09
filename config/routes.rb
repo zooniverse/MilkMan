@@ -5,29 +5,29 @@ Milkman::Application.routes.draw do
 
   get "subjects/index"
 
-  match 'groups' => 'groups#index'
-  match 'groups/:zoo_id/export' => 'groups#export'
-  match 'groups/:zoo_id/csv' => 'groups#csv'
-  match 'groups/:zoo_id(/:page)' => 'groups#show', defaults: { page: 1 }
-  match 'subjects/:zoo_id' => 'subjects#show'
-  match 'page/:page_id' => 'subjects#page'
-  match 'coordinates' => 'subjects#coordinates'
-  match 'subjects/preview/:zoo_id' => 'subjects#preview'
-  match 'subjects/simbad/:zoo_id' => 'subjects#simbad'
-  match 'subjects/raw/:zoo_id' => 'subjects#raw'
-  match 'status(/:status)(/:page)' => 'subjects#index', defaults: {status: 'active', page: 1}
+  get 'groups' => 'groups#index'
+  get 'groups/:zoo_id/export' => 'groups#export'
+  get 'groups/:zoo_id/csv' => 'groups#csv'
+  get 'groups/:zoo_id(/:page)' => 'groups#show', defaults: { page: 1 }
+  get 'subjects/:zoo_id' => 'subjects#show'
+  get 'page/:page_id' => 'subjects#page'
+  get 'coordinates' => 'subjects#coordinates'
+  get 'subjects/preview/:zoo_id' => 'subjects#preview'
+  get 'subjects/simbad/:zoo_id' => 'subjects#simbad'
+  get 'subjects/raw/:zoo_id' => 'subjects#raw'
+  get 'status(/:status)(/:page)' => 'subjects#index', defaults: {status: 'active', page: 1}
 
-  match 'catalogues/dr2/bubbles' => 'catalogue_objects#bubbles'
+  get 'catalogues/dr2/bubbles' => 'catalogue_objects#bubbles'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
+  #   get 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  #   get 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
@@ -74,5 +74,5 @@ Milkman::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  # get ':controller(/:action(/:id(.:format)))'
 end
