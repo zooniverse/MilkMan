@@ -7,6 +7,9 @@
     <th>Page</th>
     <th>Classification count</th>
     <th>BHL ID</th>
+    <th>Volume</th>
+    <th>Page</th>
+    <th>Year</th>
     <th>Image scale</th>
     <th>Type</th>
     <th>Coords</th>
@@ -18,6 +21,9 @@
         <td><a href="/subjects/<%= result[:subject_id] %>"><%= result[:subject_id] %></a></td>
         <td><%= result[:classification_count] %> </td>
         <td><%= result[:page_id] %> </td>
+        <td><%= result[:volume] %> </td>
+        <td><%= result[:page] %> </td>
+        <td><%= result[:year] %> </td>
         <td><%= result[:scale] %> </td>
         <td>Page keywords</td>
         <td>[]</td>
@@ -28,6 +34,9 @@
           <td><a href="/subjects/<%= result[:subject_id] %>"><%= result[:subject_id] %></a></td>
           <td><%= result[:classification_count] %> </td>
           <td><%= result[:page_id] %> </td>
+          <td><%= result[:volume] %> </td>
+          <td><%= result[:page] %> </td>
+          <td><%= result[:year] %> </td>
           <td><%= result[:scale] %> </td>
           <td><%= mark["type"] %></td>
           <td><%= mark["coords"].to_s %></td>
