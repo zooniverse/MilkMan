@@ -2,7 +2,7 @@
 <p>
 <% for page in @first_page..@last_page do%>
   <% unless page == @page %>
-   <a href="/status/<%= @state %>/<%= page %><%= "?has_illustrations=" + params[:has_illustrations] if params[:has_illustrations] %>"><%= page %></a>
+   <a href="/subjects/<%= @state %>/<%= page %><%= "?has_illustrations=" + params[:has_illustrations] if params[:has_illustrations] %>"><%= page %></a>
   <% else %>
     <%= page %>
   <% end %>
