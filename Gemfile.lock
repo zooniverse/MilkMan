@@ -68,7 +68,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     k_means (0.0.7)
-      distance_measures
+      distance_measures (>= 0.0.0)
     kgio (2.10.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -151,7 +151,7 @@ DEPENDENCIES
   unicorn
 
 RUBY VERSION
-   ruby 2.2.2p95
+   ruby 2.2.10p489
 
 BUNDLED WITH
    1.16.1
