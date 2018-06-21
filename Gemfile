@@ -7,7 +7,6 @@ gem "mongo_mapper"
 gem "bson_ext"
 gem 'unicorn'
 gem "jquery-rails"
-gem "rugged"
 
 gem "dbscan"
 gem "k_means"
