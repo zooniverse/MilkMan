@@ -1,13 +1,12 @@
 source 'http://rubygems.org'
 source 'http://gemcutter.org'
-ruby '2.2.1'
+ruby '2.2.10'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.10'
 gem "mongo_mapper"
 gem "bson_ext"
 gem 'unicorn'
 gem "jquery-rails"
-gem "rugged"
 
 gem "dbscan"
 gem "k_means"
