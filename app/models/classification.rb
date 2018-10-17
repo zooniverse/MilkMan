@@ -14,7 +14,7 @@ class Classification
   scope :for_subject, lambda {|zid| where(:subject_ids => [Subject.find_by_zooniverse_id(zid).id]) }
 
   def self.most_recent
-      Classification.sort(:created_at.desc).first
+      Classification.last
   end
 
   def subject
