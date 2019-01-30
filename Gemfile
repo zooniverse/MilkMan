@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 source 'http://gemcutter.org'
 ruby '2.2.10'
 
-gem 'rails', '4.2.10'
+gem 'rails', '4.2.11'
 gem "mongo_mapper"
 gem "bson_ext"
 gem 'unicorn'
