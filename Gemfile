@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 # source 'http://gemcutter.org'
-ruby '2.2.10'
+ruby '2.4.1'
 
 gem 'rails', '4.2.11'
 gem "mongo_mapper"
