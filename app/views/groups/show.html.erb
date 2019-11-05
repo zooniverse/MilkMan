@@ -1,5 +1,6 @@
 <p><%= @g.metadata['title'] %></p>
 <p><%= @g.stats['complete'] %>/<%= @g.stats['total'] %> pages complete.</p>
+<p><%= @g.illustrated_pages %> illustrated pages classified.</p>
 <p>Status: <%= @g.state %></p>
 <p>
 <% for page in @first_page..@last_page do%>

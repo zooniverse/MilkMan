@@ -18,13 +18,18 @@ class Group
     @pages ||= []
     offset = (page - 1) * 20
     if @pages.empty?
-      Subject.fields(:zooniverse_id, :location).sort('metadata.page_id').limit(20).skip( offset ).find_each('group.zooniverse_id' => self.zooniverse_id ) do |g|
+      Subject.where('metadata.has_illustrations_count' => {:$gte => 3}, 'group.zooniverse_id' => self.zooniverse_id).fields(:zooniverse_id, :location).sort('metadata.page_id').limit(20).skip( offset ).find_each do |g|
         @pages << g
       end
     end
     @pages
   end
-  
+
+  def illustrated_pages
+    subjects = Subject.where('metadata.has_illustrations_count' => {:$gte => 3}, 'group.zooniverse_id' => self.zooniverse_id)
+    subjects.size
+  end
+
   def completed
     completed = 100 * self.stats['complete'].to_f/self.stats['total'].to_f
     completed.round unless self.stats['total'].to_i == 0
