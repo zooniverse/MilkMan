@@ -20,7 +20,12 @@ class GroupsController < ApplicationController
     
     @results ||= self.gather_results params[:zoo_id]
   end
-  
+
+  def subjects
+    @g = Group.find_by_zooniverse_id(params[:zoo_id])
+    @subjects = Subject.where('metadata.has_illustrations_count' => {:$gte => 3}, 'group.zooniverse_id' => params[:zoo_id]).fields(:zooniverse_id, :metadata)
+  end
+
   def csv
     @g = Group.find_by_zooniverse_id(params[:zoo_id])
     

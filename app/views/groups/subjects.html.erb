@@ -1,0 +1,20 @@
+<p><%= @g.metadata['title'] %></p>
+<p><%= @g.stats['complete'] %>/<%= @g.stats['total'] %> pages complete.</p>
+<p>Status: <%= @g.state %></p>
+
+<table>
+  <theader>
+    <th>ID</th>
+    <th>Zooniverse ID</th>
+    <th>metadata</th>
+  </theader>
+  <tbody>
+    <% @subjects.each do |subject| %>
+      <tr>
+        <td><%= subject[:_id]%></td>
+        <td><a href="/subjects/<%= subject[:zooniverse_id] %>"><%= subject[:zooniverse_id] %></a></td>
+        <td><%= subject[:metadata].to_json %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
