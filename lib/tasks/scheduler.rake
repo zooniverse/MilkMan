@@ -72,3 +72,16 @@ task :export_results => :environment do
     end
   end
 end
+
+desc "export subjects by group to JSON files"
+task :export_subjects => :environment do
+  counter = 0
+
+  Group.find_each( :state.in => ['complete', 'active'] ) do |g|
+    counter += 1
+    puts "#{counter} #{g.zooniverse_id} #{g.name}"
+
+    subjects = Subject.sort('metadata.page_id').where('group.zooniverse_id' => g.zooniverse_id, 'metadata.has_illustrations_count' => {:$gte => 5})
+    File.open("data/subjects/#{g.zooniverse_id}.json", 'w') { |file| file.puts subjects.to_json }
+  end
+end
