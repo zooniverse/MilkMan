@@ -73,6 +73,19 @@ task :export_results => :environment do
   end
 end
 
+desc "export results by group to JSON files"
+task :export_result_data => :environment do
+  counter = 0
+
+  Group.find_each( :state.in => ['complete', 'active'] ) do |g|
+    counter += 1
+    puts "#{counter} #{g.zooniverse_id} #{g.name}"
+
+    results = Result.sort(:page_id).all(:group_id => g.zooniverse_id)
+    File.open("data/results/#{g.zooniverse_id}.json", 'w') { |file| file.puts results.to_json }
+  end
+end
+
 desc "export subjects by group to JSON files"
 task :export_subjects => :environment do
   counter = 0
