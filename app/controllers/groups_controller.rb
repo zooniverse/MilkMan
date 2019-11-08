@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   
   def index
-    @groups = Group.all
+    @groups = Group.sort(:zooniverse_id).all
     @pagetitle = Milkman::Application.config.project["name"]
   end
   

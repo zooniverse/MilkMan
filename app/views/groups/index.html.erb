@@ -4,6 +4,7 @@
     <ol>
     <% @groups.select{|t| t['state'] == 'complete' }.each do |group| %>
       <li>
+        (<%= group.zooniverse_id %>)
         <a href="/groups/<%= group.zooniverse_id %>"><%= group.metadata['title'] %></a> (<%= group.completed %>%) <b>(<%= group.classifications_per_page %>)</b>
         <p>Complete: <%= group.stats['complete'] %><br>
           Active: <%= group.stats['active'] %><br>
