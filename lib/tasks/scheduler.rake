@@ -98,3 +98,16 @@ task :export_subjects => :environment do
     File.open("data/subjects/#{g.zooniverse_id}.json", 'w') { |file| file.puts subjects.to_json }
   end
 end
+
+desc "export classifications by subject to JSON files"
+task :export_classifications => :environment do
+  counter = 0
+
+  Subject.fields(:zooniverse_id).sort(:zooniverse_id).where('metadata.has_illustrations_count' => {:$gte => 5}).find_each do |s|
+    counter += 1
+    puts "#{counter} #{s.zooniverse_id}"
+
+    classifications = Classification.where(:subject_ids => [s.id])
+    File.open("data/classifications/#{s.zooniverse_id}.json", 'w') { |file| file.puts classifications.to_json }
+  end
+end
