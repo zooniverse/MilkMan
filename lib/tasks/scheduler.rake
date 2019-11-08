@@ -1,5 +1,5 @@
 desc "update results collection for completed groups"
-task :export_results => :environment do
+task :calculate_results => :environment do
   counter = 0
   
   Group.find_each( :state.in => ['complete', 'active'] ) do |g|
@@ -74,7 +74,7 @@ task :export_results => :environment do
 end
 
 desc "export results by group to JSON files"
-task :export_result_data => :environment do
+task :export_results => :environment do
   counter = 0
 
   Group.find_each( :state.in => ['complete', 'active'] ) do |g|
