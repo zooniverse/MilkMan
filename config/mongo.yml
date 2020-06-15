@@ -3,8 +3,7 @@ defaults: &defaults
   port: 27017
 
 development:
-  <<: *defaults
-  database: ouroboros
+  uri: <%= ENV['MONGODB_URL'] %>
 
 test:
   <<: *defaults
